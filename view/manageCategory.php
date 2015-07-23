@@ -61,9 +61,8 @@
 
 	<script>
 
-	//var baseurl = "http://localhost/pilot/";
 
-	var url =  baseurl+"controller/CategoryController.php";
+	var url =  "../controller/CategoryController.php";
 
 var app = angular.module('myApp', ['ngTouch', 'ui.grid']);
 
@@ -99,8 +98,6 @@ app.controller("categoryCtrl", function($scope, $http) {
                      } else {
                     	 $scope.myData.fromServer = obj.message;
                      }
-
-
                     
                 });
                 responsePromise.error(function(response) {

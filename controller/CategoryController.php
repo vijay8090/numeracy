@@ -55,7 +55,6 @@ if( $data->btn_action == 'save')
 	{
 		
 	//$clientip =	util::get_client_ip();
-	//$userDir = util::get_user_directory();
 	
 	$categoryArray =  $categoryDao->getAllCategory();
 	
@@ -65,14 +64,10 @@ if( $data->btn_action == 'save')
 
 	$jsonstr .= '{"message":"success","data":[';
 
-	//for ($x = 0; $x < $size; $x++) {
-	//	$category = $categoryArray[$x];
 
 	foreach ($categoryArray as $category) {
-
-		//var_dump($category);
-
-		$jsonstr .= $category->__toString().",";
+		
+		$jsonstr .= $category->iterateVisible().",";
 
 	}
 
@@ -82,8 +77,8 @@ if( $data->btn_action == 'save')
 
 	echo json_encode($jsonstr);
 	
-	}catch(Exception $e)
-	{
+	}catch(Exception $e) {
+		
 		// echo $e->getMessage();
 		$msg = 'failure'.$e->getMessage().$e->getFile().$e->getLine();	
 		$msg = str_replace("\\", "\\\\", $msg);

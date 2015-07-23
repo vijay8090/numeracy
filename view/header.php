@@ -14,7 +14,6 @@
 
 	<script>
 
-	var baseurl = "http://localhost/pilot/";
 
 	</script>
 
@@ -29,8 +28,8 @@
 
 <div class="navbar navbar-default navbar-static-top" role="navigation">
  
- <a href="/pilot/view" class="btn btn-success btn-lg" role="button" > Home</a>
- <a href="/pilot/view/manageCategory.php" class="btn btn-success btn-lg" role="button" > Manage Category</a>
+ <a href="../view" class="btn btn-success btn-lg" role="button" > Home</a>
+ <a href="../view/manageCategory.php" class="btn btn-success btn-lg" role="button" > Manage Category</a>
     
 </div>
 <br>

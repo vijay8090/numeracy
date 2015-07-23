@@ -92,6 +92,25 @@ class CategoryBO
     {
         return '{"id":"' . $this->id . '","label":"' . $this->getLabel() . '","startAge":"' . $this->getStartAge() . '","endAge":"' . $this->getEndAge() . '","gender":"' . $this->getGender(). '"}';
     }
+    
+    
+    
+    public function iterateVisible() {
+    	$json = "{";
+    	
+    	foreach($this as $key => $value) {
+    		$json .= "\"".$key."\":\"".$value."\",";
+    		//print "$key => $value\n";
+    	}
+    	
+    	$json = substr($json, 0, -1); ;
+    	
+    	$json .= "}";
+    	
+    	return $json;
+    	//print $json;
+    }
+    
 }
 
 ?>
