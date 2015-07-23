@@ -1,0 +1,75 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-touch.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular-animate.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
+    <script src= "../js/ui-grid.js"></script>
+ <link href="../css/ui-grid.css" rel="stylesheet" media="screen"/> 
+    
+    <style>
+    .grid {
+  width: 900px;
+  height: 450px;
+}
+    </style>
+  </head>
+  <body>
+    <div ng-controller="MainCtrl">
+      <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>  <span ng-bind="currentFocused"></span>
+      <br>
+      <br>
+      <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>
+    </div>
+    <script>
+    var app = angular.module('app', ['ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.cellNav']);
+    
+    app.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+    	
+    	$scope.gridOptions = {  
+    		    enableFiltering: true,
+    		    flatEntityAccess: true,
+    		    showGridFooter: true,
+    		    fastWatch: true
+    		  };
+    	
+      $scope.gridOptions.enableCellEditOnFocus = true;
+     
+      $scope.gridOptions.columnDefs = [
+        { name: 'id', enableCellEdit: false },
+        { name: 'age', enableCellEditOnFocus:false, displayName:'age (f2/dblClick edit)', width: 200  },
+        { name: 'address.city', enableCellEdit: true, width: 300 },
+        { name: 'name', displayName: 'Name (editOnFocus)', width: 200}
+      ];
+     
+     /*  $http.get('/data/500_complex.json')
+        .success(function(data) {
+          $scope.gridOptions.data = data;
+        }); */
+        
+        $scope.gridOptions.data = [ {"id":1,"age":10,"address":{"city":"chennai"},"name":"vijay"},
+                                    {"id":2,"age":10,"address":{"city":"mumbai"},"name":"arun"},
+                                    {"id":3,"age":10,"address":{"city":"delhi"},"name":"sathish"}
+                                   
+                                   
+                                   ]
+     
+        $scope.currentFocused = "";
+     
+        $scope.getCurrentFocus = function(){
+          var rowCol = $scope.gridApi.cellNav.getFocusedCell();
+          if(rowCol !== null) {
+              $scope.currentFocused = 'Row Id:' + rowCol.row.entity.id + ' col:' + rowCol.col.colDef.name  + ' val:' + rowCol.row.entity.name;
+          }
+        }
+     
+        $scope.gridOptions.onRegisterApi = function(gridApi){
+           $scope.gridApi = gridApi;
+        };
+    }]);
+    </script>
+  </body>
+</html>
