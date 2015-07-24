@@ -27,7 +27,7 @@
 
 		$pdo = DbUtil::connect();
 
-		$sql = "SELECT M02CATEGORYID as id, label,startage,endage FROM M02_CATEGORY";
+		$sql = "SELECT M02CATEGORYID as id, label,startage,endage,gender FROM M02_CATEGORY";
 			
 		$values= $pdo->query($sql) ;
 			
@@ -42,6 +42,7 @@
 			<td><?php print($row['label']); ?></td>
 			<td><?php print($row['startage']); ?></td>
 			<td><?php print($row['endage']); ?></td>
+			<td><?php print($row['gender']); ?></td>
 		</tr>
 
 		<?php

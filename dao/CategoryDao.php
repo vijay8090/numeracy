@@ -1,5 +1,7 @@
 <?php
 
+include_once '../bo/CategoryBO.php';
+
 /**
  * CategoryDAO (Data Access Object )
  * @author avijaya8
@@ -8,6 +10,11 @@
 class CategoryDao
 {
 	private $db;
+	
+	private static $insertSQL = "INSERT INTO M02_CATEGORY(LABEL,STARTAGE,ENDAGE,GENDER) VALUES(:label, :startAge, :endAge, :gender)";
+	private static $selectSQL = "SELECT M02CATEGORYID AS ID, LABEL,STARTAGE,ENDAGE,GENDER FROM M02_CATEGORY ORDER BY M02CATEGORYID DESC";
+	private static $updateSQL = "UPDATE M02_CATEGORY set  LABEL = :label, STARTAGE = :startAge, ENDAGE = :endAge, GENDER = :gender WHERE M02CATEGORYID = :id ";
+	private static $deleteSQL = "DELETE FROM M02_CATEGORY WHERE M02CATEGORYID = :id";
 
 	function __construct($DB_con)
 	{
@@ -15,11 +22,11 @@ class CategoryDao
 	}
 
 
-	public function create($categoryBO)
+	public function create($categoryBO) 
 	{
 		/* try
 		{ */
-			$stmt = $this->db->prepare("INSERT INTO M02_CATEGORY(LABEL,STARTAGE,ENDAGE,GENDER) VALUES(:label, :startAge, :endAge, :gender)");
+			$stmt = $this->db->prepare(self::$insertSQL);
 			
 			$label = $categoryBO->getLabel();
 			$startAge = $categoryBO->getStartAge();
@@ -27,7 +34,7 @@ class CategoryDao
 			$gender = $categoryBO->getGender();
 			
 			$stmt->bindparam(":label",$label);
-			$stmt->bindparam(":startAge",$startAge);
+			$stmt->bindparam(":startAge",$startAge );
 			$stmt->bindparam(":endAge",$endAge);
 			$stmt->bindparam(":gender",$gender);
 			
@@ -51,41 +58,52 @@ class CategoryDao
 	{
 	    
 	    $categoryArray = array();
-	    /* try
-	    { */
-	    		$sql = "SELECT M02CATEGORYID as id, label,startage,endage,gender FROM M02_CATEGORY order by M02CATEGORYID desc";
-			
-		$values =  $this->db->query($sql) ;
+	    			
+		$values =  $this->db->query(self::$selectSQL) ;
 			
 		if (is_array($values) || is_object($values))
 		{
-		    
-		   include_once '../bo/CategoryBO.php';
 
 			foreach ($values as $row) {
-			    
-			   // $categoryArray[] = $row['id'];
-			    
 			    $category = new CategoryBO();
-			    $category->setId($row['id']);
-			    $category->setLabel($row['label']);
-			    $category->setStartAge($row['startage']);
-			    $category->setEndAge($row['endage']);
-			    $category->setGender($row['gender']);
+			    $category->setId($row['ID']);
+			    $category->setLabel($row['LABEL']);
+			    $category->setStartAge($row['STARTAGE']);
+			    $category->setEndAge($row['ENDAGE']);
+			    $category->setGender($row['GENDER']);
 			    //echo $category;
 			    $categoryArray[] = $category; 
-		
 	       }
 		}
-	    /* }
-	    catch(PDOException $e)
-	    {
-	        echo $e->getMessage();
-	        return null;
-	    } */
-	    
+	   	    
 	    return $categoryArray;
 	
+	}
+	
+	
+	public function update($categoryBO)
+	{
+		
+		$stmt = $this->db->prepare(self::$updateSQL);
+					
+		$stmt->bindparam(":id",$categoryBO->getId());	
+			
+		$stmt->execute();
+			
+		return true;
+	}
+	
+	
+	public function delete($categoryBO)
+	{
+	
+		$stmt = $this->db->prepare(self::$deleteSQL);
+			
+		$stmt->bindparam(":id",$categoryBO->getId());	
+			
+		$stmt->execute();
+			
+		return true;
 	}
 
 

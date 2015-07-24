@@ -108,7 +108,7 @@ app.controller("categoryCtrl", function($scope, $http) {
             // Get All Category
             $scope.myData.getAllCategory = function() {
 
-            	//alert("getAllCategory!" );
+            //	alert("getAllCategory!" );
                 
         	var FormData = {
           		  'btn_action' : 'getAllCategory'
