@@ -49,6 +49,65 @@ if( $data->btn_action == 'save')
 		$msg = htmlspecialchars($msg);		
 		echo json_encode('{"message":"'.$msg.'"}');
 	}
+} else if( $data->btn_action == 'update')
+{
+	try
+	{
+	$id = $data->id;
+	$category = $data->category;
+	$startAge = $data->startAge;
+	$endAge = $data->endAge;
+	$gender = $data->gender;
+	
+	//$contact = $_POST['contact_no'];
+	$categoryBO = new CategoryBO();
+
+	$categoryBO->setId($id);
+	$categoryBO->setLabel($category);
+	$categoryBO->setStartAge($startAge);
+	$categoryBO->setEndAge($endAge);
+	$categoryBO->setGender($gender);
+
+
+	if ($categoryDao->update($categoryBO)) {
+		echo json_encode('{"message":"success"}');
+	} 	else{
+	
+		echo json_encode('{"message":"failure"}');
+	}
+	
+	}catch(Exception $e)
+	{
+		$msg = 'failure'.$e->getMessage().$e->getFile().$e->getLine();	
+		$msg = str_replace("\\", "\\\\", $msg);
+		$msg = htmlspecialchars($msg);		
+		echo json_encode('{"message":"'.$msg.'"}');
+	}
+}  else if( $data->btn_action == 'delete')
+{
+	try
+	{
+	$id = $data->id;
+		
+	//$contact = $_POST['contact_no'];
+	$categoryBO = new CategoryBO();
+
+	$categoryBO->setId($id);
+
+	if ($categoryDao->delete($categoryBO)) {
+		echo json_encode('{"message":"success"}');
+	} 	else{
+	
+		echo json_encode('{"message":"failure"}');
+	}
+	
+	}catch(Exception $e)
+	{
+		$msg = 'failure'.$e->getMessage().$e->getFile().$e->getLine();	
+		$msg = str_replace("\\", "\\\\", $msg);
+		$msg = htmlspecialchars($msg);		
+		echo json_encode('{"message":"'.$msg.'"}');
+	}
 } else if( $data->btn_action == 'getAllCategory') {
 
 	try

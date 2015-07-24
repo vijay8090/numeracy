@@ -52,7 +52,6 @@ class CategoryDao
 
 	}
 	
-	
 
 	public function getAllCategory()
 	{
@@ -85,8 +84,18 @@ class CategoryDao
 	{
 		
 		$stmt = $this->db->prepare(self::$updateSQL);
+		
+		$id =  $categoryBO->getId();
+		$label = $categoryBO->getLabel();
+		$startAge = $categoryBO->getStartAge();
+		$endAge = $categoryBO->getEndAge();
+		$gender = $categoryBO->getGender();
 					
-		$stmt->bindparam(":id",$categoryBO->getId());	
+		$stmt->bindparam(":id",$id);
+		$stmt->bindparam(":label",$label);
+		$stmt->bindparam(":startAge",$startAge );
+		$stmt->bindparam(":endAge",$endAge);
+		$stmt->bindparam(":gender",$gender);
 			
 		$stmt->execute();
 			
@@ -98,8 +107,10 @@ class CategoryDao
 	{
 	
 		$stmt = $this->db->prepare(self::$deleteSQL);
+		
+		$id =  $categoryBO->getId();
 			
-		$stmt->bindparam(":id",$categoryBO->getId());	
+		$stmt->bindparam(":id",$id);
 			
 		$stmt->execute();
 			
