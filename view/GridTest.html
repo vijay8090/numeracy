@@ -21,6 +21,10 @@
     <div ng-controller="MainCtrl">
       <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>  <span ng-bind="currentFocused"></span>
       <br>
+      <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+      <br>
+      <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
+      <br>
       <br>
       <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>
     </div>
@@ -65,9 +69,16 @@
               $scope.currentFocused = 'Row Id:' + rowCol.row.entity.id + ' col:' + rowCol.col.colDef.name  + ' val:' + rowCol.row.entity.name;
           }
         }
+        
+        $scope.msg = {};
      
         $scope.gridOptions.onRegisterApi = function(gridApi){
            $scope.gridApi = gridApi;
+           
+           gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+               $scope.msg.lastCellEdited = 'edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
+               $scope.$apply();
+             });
         };
     }]);
     </script>

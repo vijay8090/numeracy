@@ -53,30 +53,35 @@ if( $data->btn_action == 'save')
 {
 	try
 	{
-	$id = $data->id;
-	$category = $data->category;
-	$startAge = $data->startAge;
-	$endAge = $data->endAge;
-	$gender = $data->gender;
-	
-	//$contact = $_POST['contact_no'];
+	// create new category object
 	$categoryBO = new CategoryBO();
+	
+	// get id from request
+	if(property_exists($data, 'id')) $categoryBO->setId($data->id);
+	
+	// get the persistance obj from db
+	$categoryBO =  $categoryDao->getById($categoryBO);
+	
+	if($categoryBO != null){
+	// set new values
+	if(property_exists($data, 'label')) $categoryBO->setLabel($data->label);
+	if(property_exists($data, 'startAge')) $categoryBO->setStartAge($data->startAge);
+	if(property_exists($data, 'endAge')) $categoryBO->setEndAge($data->endAge);
+	if(property_exists($data, 'gender')) $categoryBO->setGender( $data->gender);
+	
+	}
 
-	$categoryBO->setId($id);
-	$categoryBO->setLabel($category);
-	$categoryBO->setStartAge($startAge);
-	$categoryBO->setEndAge($endAge);
-	$categoryBO->setGender($gender);
-
-
+	// update new values into db
 	if ($categoryDao->update($categoryBO)) {
+		
 		echo json_encode('{"message":"success"}');
+		
 	} 	else{
 	
 		echo json_encode('{"message":"failure"}');
 	}
 	
-	}catch(Exception $e)
+	} catch(Exception $e)
 	{
 		$msg = 'failure'.$e->getMessage().$e->getFile().$e->getLine();	
 		$msg = str_replace("\\", "\\\\", $msg);
@@ -87,14 +92,16 @@ if( $data->btn_action == 'save')
 {
 	try
 	{
-	$id = $data->id;
+	$idstr = $data->ids;
+	
+	$ids = explode(",", $idstr);
 		
 	//$contact = $_POST['contact_no'];
-	$categoryBO = new CategoryBO();
+	//$categoryBO = new CategoryBO();
 
-	$categoryBO->setId($id);
+//	$categoryBO->setId($id);
 
-	if ($categoryDao->delete($categoryBO)) {
+	if ($categoryDao->delete($ids)) {
 		echo json_encode('{"message":"success"}');
 	} 	else{
 	
