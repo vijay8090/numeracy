@@ -4,12 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Numeracy</title>
 <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/> 
-<link href="../css/ui-grid.css" rel="stylesheet" media="screen"/> 
+<link href="../css/ui-grid.min.css" rel="stylesheet" media="screen"/> 
 <script src= "../bootstrap/js/bootstrap.js"></script>
 <script src= "../js/angular.js"></script>
 <script src= "../js/ui-grid.js"></script>
 <script src= "../js/angular-animate.js"></script>
 <script src= "../js/angular-touch.js"></script>
+<script src="../js/grunt-scripts/csv.js"></script>
+<script src="../js/grunt-scripts/pdfmake.js"></script>
 <script src="../js/grunt-scripts/vfs_fonts.js"></script>
 
 	<script>

@@ -63,7 +63,7 @@
        <button type="button" class="btn btn-success" ng-click="myData.delete()">delete selected</button>  <span ng-bind="myData.deletemsg"></span>
       <br>
 			
-			<div ui-grid="gridOptions" ui-grid-edit ui-grid-selection ui-grid-cellnav class="grid"></div>
+			<div ui-grid="gridOptions" ui-grid-edit ui-grid-selection ui-grid-cellnav ui-grid-pagination ui-grid-exporter  class="grid"></div>
 			
 		</div>
 	</div>
@@ -72,22 +72,54 @@
 
 
 	var url =  "../controller/CategoryController.php";
+//ui-grid-cellnav
 
-var app = angular.module('myApp', ['ngTouch', 'ui.grid', 'ui.grid.selection','ui.grid.edit', 'ui.grid.cellNav']);
+	//,'ui.grid.edit', 'ui.grid.cellNav'
+
+var app = angular.module('myApp', ['ngTouch', 'ui.grid', 'ui.grid.selection','ui.grid.edit', 'ui.grid.cellNav', 'ui.grid.pagination', 'ui.grid.exporter']);
 
 app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstants', function($scope, $http) {
 
 	//$scope.gridOptions = { enableRowSelection: true, enableRowHeaderSelection: false };
 			 $scope.gridOptions = {  
-					 	enableRowSelection: true,
+					 enableGridMenu: true,
+					 exporterCsvFilename: 'myFile.csv',
+					 exporterPdfDefaultStyle: {fontSize: 9},
+					    exporterPdfTableStyle: {margin: [30, 20, 30, 20]},
+					    exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+					    exporterPdfHeader: { text: "Category List", style: 'headerStyle' },
+					    exporterPdfFooter: function ( currentPage, pageCount ) {
+					      return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
+					    },
+					    exporterPdfCustomFormatter: function ( docDefinition ) {
+					      docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+					      docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+					      return docDefinition;
+					    },
+					    exporterPdfOrientation: 'portrait',
+					    exporterPdfPageSize: 'LETTER',
+					    exporterPdfMaxGridWidth: 500,
+					    exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+
+
+					 
+					 paginationPageSizes: [100,250,500,1000,2500,5000,10000],
+				    	paginationPageSize: 1000,
+					    enableRowSelection: false,
+					    enableRowHeaderSelection: true,
+					    multiSelect: true,
+					    enableFiltering: true,
+					    
+					/*  	enableRowSelection: true,
 					 	enableRowHeaderSelection: false,
 					    enableSelectAll: true,
 					   // selectionRowHeaderWidth: 55,
 					   // rowHeight: 55,
-					    enableFiltering: true,
+					    
 					    flatEntityAccess: true,
-					    showGridFooter: true,
-					    fastWatch: true
+					    fastWatch: true, */
+					    showGridFooter: true
+					   
 					  };
 				
 			 /* $scope.gridOptions.enableCellEditOnFocus = true;
@@ -105,8 +137,10 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 			      };
 			 
 			  $scope.gridOptions.columnDefs = [
-			    { name: 'id', displayName: 'S.No', enableCellEdit: false,width: 70  },
-			    { name: 'label', displayName: 'CategoryLabel', enableCellEditOnFocus: true, width: 300  },
+			      //{name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.rows.indexOf(row)}}</div>'},            			  
+			     {name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>'},
+			    { name: 'id', displayName: 'S.No', enableCellEdit: false,width: 70, visible:false  },
+			    { name: 'label', displayName: 'CategoryLabel', width: 300  },
 			    { name: 'startAge', displayName: 'Start Age', enableCellEdit: true, width: 200 },
 			    { name: 'endAge', displayName: 'End Age', width: 200},
 			    { name: 'gender', displayName: 'Gender', width: 100}
@@ -119,7 +153,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 		        $scope.gridOptions.onRegisterApi = function(gridApi){
 		           $scope.gridApi = gridApi;
 		           
-		           gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+		            gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
 		              // $scope.msg.lastCellEdited = 'edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
 		               $scope.msg.updateVal = {};
 			              // $scope.msg.updateVal = {'id': rowEntity.id, ''+colDef.name : newValue };
@@ -131,7 +165,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 		               $scope.myData.update();
 			          	}
 		               
-		             });
+		             }); 
 
 
 		            gridApi.selection.on.rowSelectionChanged($scope,function(row){
@@ -279,6 +313,10 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
             // alert(obj.message);
              if(obj.message == 'success'){
             	 $scope.gridOptions.data  = obj.data;
+
+            	/*  $scope.gridOptions.data.forEach( function( row, index){
+            		    row.sno = index+1;
+            		  }); */
             	 
              } else {
             	 $scope.myData.fromServer = obj.message;
