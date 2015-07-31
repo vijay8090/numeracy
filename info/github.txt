@@ -1,0 +1,35 @@
+
+open github shell:
+==========================================================================
+// go to wamp www folder
+cd c:/wamp/www
+
+==========================================================================
+// clone repository onto local
+git clone https://github.com/vijay8090/numeracy
+
+==========================================================================
+// get all files from server
+cd numeracy
+git pull
+
+==========================================================================
+
+// Git force pull to overwrite local files
+git fetch --all
+git reset --hard origin/master
+git pull origin master
+
+==========================================================================
+//promote all your changes to server
+
+git add *
+
+git commit -m "Comments"
+
+git push
+
+==========================================================================
+
+
+
