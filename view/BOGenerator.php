@@ -37,7 +37,7 @@
 						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
 							Menu</a>
                         
-                           <?php include_once 'manageCategorySidebar.php'; ?>
+                           <?php include_once 'BOGeneratorSidebar.php'; ?>
                     </div>
 				</div>
 			</div>

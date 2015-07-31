@@ -1,15 +1,18 @@
 <?php
 
-include_once '../bo/CategoryBO.php';
+require __DIR__ . '\CategoryDaoInterface.php';
 
-use com\numeracy\BO\CategoryBO;
+
+include_once '../bo/M02CategoryBO.php';
+
+use com\numeracy\BO\M02CategoryBO;
 
 /**
  * CategoryDAO (Data Access Object )
  * @author avijaya8
  *
  */
-class CategoryDao
+class CategoryDao 
 {
 	private $db;
 	
@@ -34,12 +37,12 @@ class CategoryDao
      * @param CategoryBO $categoryBO
      * @return boolean
      */
-	public function create(CategoryBO $categoryBO ) 
+	public function create(M02CategoryBO $categoryBO ) 
 	{
 		
 			$stmt = $this->db->prepare(self::$insertSQL);
 			
-			$stmt->execute(array($categoryBO->getLabel(),$categoryBO->getStartAge(),$categoryBO->getEndAge(),$categoryBO->getGender()));
+			$stmt->execute(array($categoryBO->getLabel(),$categoryBO->getStartage(),$categoryBO->getEndage(),$categoryBO->getGender()));
 			
 			return true;
 	}
@@ -48,7 +51,7 @@ class CategoryDao
      * 
      * @return multitype:\com\numeracy\BO\CategoryBO
      */
-	public function getAllCategory()
+	public function getAll()
 	{
 	    
 	    $categoryArray = array();
@@ -59,8 +62,8 @@ class CategoryDao
 		{
 
 			foreach ($values as $row) {
-			    $category = new CategoryBO();
-			    $category->setCategoryId($row['ID']);
+			    $category = new M02CategoryBO();
+			    $category->setM02categoryid($row['ID']);
 			    $category->setLabel($row['LABEL']);
 			    $category->setStartAge($row['STARTAGE']);
 			    $category->setEndAge($row['ENDAGE']);
@@ -79,24 +82,24 @@ class CategoryDao
 	 * @param CategoryBO $categoryBO
 	 * @return \com\numeracy\BO\CategoryBO
 	 */
-	public function getById(CategoryBO $categoryBO)
+	public function getById(M02CategoryBO $categoryBO)
 	{
 		 
 	   // (com\numeracy\BO\CategoryBO())$categoryBO;
 	    
-	    $category = new CategoryBO();
+	    $category = new M02CategoryBO();
 		
 		$stmt = $this->db->prepare(self::$selectByIdSQL);
-		$id =  intval($categoryBO->getCategoryId());
+		$id =  intval($categoryBO->getM02categoryid());
 		$stmt->execute(array($id));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		
 		if($row != null){
-		$category = new CategoryBO();
-		$category->setCategoryId($row['M02CATEGORYID']);
+		$category = new M02CategoryBO();
+		$category->setM02categoryid($row['M02CATEGORYID']);
 		$category->setLabel($row['LABEL']);
-		$category->setStartAge($row['STARTAGE']);
-		$category->setEndAge($row['ENDAGE']);
+		$category->setStartage($row['STARTAGE']);
+		$category->setEndage($row['ENDAGE']);
 		$category->setGender($row['GENDER']);
 		$categoryArray[] = $category;
 		
@@ -110,12 +113,12 @@ class CategoryDao
 	 * @param CategoryBO $categoryBO
 	 * @return boolean
 	 */
-	public function update(CategoryBO $categoryBO)
+	public function update(M02CategoryBO $categoryBO)
 	{
 		
 		$stmt = $this->db->prepare(self::$updateSQL);
 			
-		$stmt->execute(array($categoryBO->getLabel(),$categoryBO->getStartAge(),$categoryBO->getEndAge(), $categoryBO->getGender(),  $categoryBO->getCategoryId()));
+		$stmt->execute(array($categoryBO->getLabel(),$categoryBO->getStartage(),$categoryBO->getEndage(), $categoryBO->getGender(),  $categoryBO->getM02categoryid()));
 			
 		return true;
 	}

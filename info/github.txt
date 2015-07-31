@@ -31,5 +31,17 @@ git push
 
 ==========================================================================
 
+How to Create a Branch in GitHub?
+
+git checkout -b [name_of_your_new_branch]
+git push origin [name_of_your_new_branch]
+git branch
+
+==========================================================================
+
+switch to master?
+
+git checkout master
 
 
+==========================================================================

@@ -5,11 +5,11 @@ use com\numeracy\util\CommonUtil;
 include_once '../util/CrossBrowserHead.php';
 include_once '../util/DbUtil.php';
 include_once '../dao/CategoryDao.php';
-include_once '../bo/M02CategoryBO.php';
+include_once '../bo/CategoryBO.php';
 include_once '../util/util.php';
 include_once '../util/CommonUtil.php';
 
-use com\numeracy\BO\M02CategoryBO;
+use com\numeracy\BO\CategoryBO;
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -31,11 +31,11 @@ if( $data->btn_action == 'save')
 	$gender = $data->gender;
 	
 	//$contact = $_POST['contact_no'];
-	$categoryBO = new M02CategoryBO();
+	$categoryBO = new CategoryBO();
 
 	$categoryBO->setLabel($category);
-	$categoryBO->setStartage($startAge);
-	$categoryBO->setEndage($endAge);
+	$categoryBO->setStartAge($startAge);
+	$categoryBO->setEndAge($endAge);
 	$categoryBO->setGender($gender);
 
 
@@ -58,10 +58,10 @@ if( $data->btn_action == 'save')
 	try
 	{
 	// create new category object
-	$categoryBO = new M02CategoryBO();
+	$categoryBO = new CategoryBO();
 	
 	// get id from request
-	if(property_exists($data, 'id')) $categoryBO->setM02categoryid($data->id);
+	if(property_exists($data, 'id')) $categoryBO->setCategoryId($data->id);
 	
 	// get the persistance obj from db
 	$categoryBO =  $categoryDao->getById($categoryBO);
@@ -69,8 +69,8 @@ if( $data->btn_action == 'save')
 	if($categoryBO != null){
 	// set new values
 	if(property_exists($data, 'label')) $categoryBO->setLabel($data->label);
-	if(property_exists($data, 'startAge')) $categoryBO->setStartage($data->startAge);
-	if(property_exists($data, 'endAge')) $categoryBO->setEndage($data->endAge);
+	if(property_exists($data, 'startAge')) $categoryBO->setStartAge($data->startAge);
+	if(property_exists($data, 'endAge')) $categoryBO->setEndAge($data->endAge);
 	if(property_exists($data, 'gender')) $categoryBO->setGender( $data->gender);
 	
 	}

@@ -15,9 +15,6 @@ class FileOB
 	private $modifiedBy;
 	
 	
-    
-	
-	
 }
 
 ?>

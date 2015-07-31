@@ -1,12 +1,71 @@
 
-<?php include_once 'header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<?php include_once 'headerincludes.php';?>
 
 
-<div class="container">
+</head>
 
-Welcome User
-	
-</div>
+<body>
+
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+          <?php include_once 'navigation.php';?>
+          
+        </div>
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+
+						<div class="alert alert-info">
+							<strong>Numeracy - ADMIN MENU </strong>
+						</div>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
+							Menu</a>
+							
+							<br/>
+							<br/>
+							<br/>
+                        
+                          <div class= "col-lg-12 btn-info" >
+                          
+                          Welcome to NUmeracy ADMin Functions
+                          </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+         <?php include_once 'footer.php'; ?>
+         
+           </div>
+				</div>
+			</div>
+		</div>
 
 
-<?php include_once 'footer.php'; ?>
+	</div>
+
+
+</body>
+
+</html>

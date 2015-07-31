@@ -1,68 +1,63 @@
-
-
-
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
 
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-<title>Dropzone simple example</title>
-
-
-
-
-<link rel="stylesheet" href="../plugin/dropzone/css/dropzone.css" />
-<link rel="stylesheet" href="../plugin/dropzone/css/basic.css" />
-<script src="../plugin/dropzone/dropzone.js"></script>
-<script src="../plugin/dropzone/dropzone-amd-module.js"></script>
+<?php include_once 'headerincludes.php';?>
 
 
 </head>
 
 <body>
 
-<p>
-  This is the most minimal example of Dropzone. The upload in this example
-  doesn't work, because there is no actual server to handle the file upload.
-</p>
+	<div id="wrapper">
 
-<!-- Change /upload-target to your upload address -->
-<form action="../controller/UploadController.php" class="dropzone"></form>
-<?php 
-$directory = "C:/wamp/www/numeracy/controller/uploads";
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+          <?php include_once 'navigation.php';?>
+          
+        </div>
+		<!-- /#sidebar-wrapper -->
 
-//echo scanDirectoryImages("../controller/uploads");
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
 
-  //  $directory    = '/home/content/60/10826060/html/qun/new/images/client';
-$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
- echo "<div align=left style='padding:20px;'>";
-while($it->valid()) {
+						<div class="alert alert-info">
+							<strong>Numeracy - ADMIN MENU </strong>
+						</div>
+						<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
+							Menu</a>
+                        
+                           <?php include_once 'uploadSidebar.php'; ?>
+                    </div>
+				</div>
+			</div>
+		</div>
 
-    if (!$it->isDot()) {
-        
-			echo "<table> <tr> <td>";
-          echo " <img class=clientlogo src='../controller/uploads/".$it->getSubPathName()."' alt='".$it->getSubPathName()."' width='200' height='120' >";
-		echo " </td><tr><td>";
-		echo " <a href='../controller/uploads/".$it->getSubPathName()."' alt='".$it->getSubPathName()."' >Download </a>";
-		//  echo $it->getSubPathName();     
-     echo "</td>";
-    }
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+         <?php include_once 'footer.php'; ?>
+         
+           </div>
+				</div>
+			</div>
+		</div>
 
-    $it->next();
-}
-        echo "</div>";
- /*   
-for ($i=0; $i<=10; $i++)
-  {
-  echo "<div>";
-  echo "client".$i;
-  echo "</div>";
-  }*/
-?>
+
+	</div>
 
 
 </body>
 
 </html>
-
-

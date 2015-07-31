@@ -22,7 +22,7 @@
 
 </head>
 
-<body>
+<body bgcolor="aqua">
  <div class="container">
 <div class="alert alert-info">
     <strong>Numeracy - ADMIN Functions</strong>
@@ -30,9 +30,10 @@
 
 <div class="navbar navbar-default navbar-static-top" role="navigation">
  
- <a href="../view" class="btn btn-success btn-lg" role="button" > Home</a>
- <a href="../view/manageCategory.php" class="btn btn-success btn-lg" role="button" > Manage Category</a>
-  <a href="../view/manageLevel.php" class="btn btn-success btn-lg" role="button" > Manage Level</a>
+ <a href="../view" class="btn btn-warning btn-lg" role="button" > Home</a>
+  <a href="../view/BOGenerator.php" class="btn btn-warning btn-lg" role="button" >Generate BO</a>
+ <a href="../view/manageCategory.php" class="btn btn-warning btn-lg" role="button" > Manage Category</a>
+  <a href="../view/manageLevel.php" class="btn btn-warning btn-lg" role="button" > Manage Level</a>
     
 </div>
 <br>
