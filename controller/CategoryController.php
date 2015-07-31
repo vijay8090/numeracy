@@ -1,11 +1,15 @@
 <?php
 
 
+use com\numeracy\util\CommonUtil;
 include_once '../util/CrossBrowserHead.php';
 include_once '../util/DbUtil.php';
 include_once '../dao/CategoryDao.php';
 include_once '../bo/CategoryBO.php';
 include_once '../util/util.php';
+include_once '../util/CommonUtil.php';
+
+use com\numeracy\BO\CategoryBO;
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -57,7 +61,7 @@ if( $data->btn_action == 'save')
 	$categoryBO = new CategoryBO();
 	
 	// get id from request
-	if(property_exists($data, 'id')) $categoryBO->setId($data->id);
+	if(property_exists($data, 'id')) $categoryBO->setCategoryId($data->id);
 	
 	// get the persistance obj from db
 	$categoryBO =  $categoryDao->getById($categoryBO);
@@ -96,10 +100,6 @@ if( $data->btn_action == 'save')
 	
 	$ids = explode(",", $idstr);
 		
-	//$contact = $_POST['contact_no'];
-	//$categoryBO = new CategoryBO();
-
-//	$categoryBO->setId($id);
 
 	if ($categoryDao->delete($ids)) {
 		echo json_encode('{"message":"success"}');
@@ -134,6 +134,8 @@ if( $data->btn_action == 'save')
 	foreach ($categoryArray as $category) {
 		
 		$jsonstr .= $category->iterateVisible().",";
+		
+	    //$jsonstr .= CommonUtil::getJsonStr($category);
 
 	}
 

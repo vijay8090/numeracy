@@ -2,6 +2,8 @@
 
 include_once '../bo/CategoryBO.php';
 
+use com\numeracy\BO\CategoryBO;
+
 /**
  * CategoryDAO (Data Access Object )
  * @author avijaya8
@@ -11,19 +13,28 @@ class CategoryDao
 {
 	private $db;
 	
+	/* SQL */
 	private static $insertSQL = "INSERT INTO M02_CATEGORY(LABEL,STARTAGE,ENDAGE,GENDER) VALUES(?,?,?,?)";
 	private static $selectSQL = "SELECT M02CATEGORYID AS ID, LABEL,STARTAGE,ENDAGE,GENDER FROM M02_CATEGORY ORDER BY M02CATEGORYID DESC";
-	private static $updateSQL = "UPDATE M02_CATEGORY set  LABEL = :label, STARTAGE = :startAge, ENDAGE = :endAge, GENDER = :gender WHERE M02CATEGORYID = :id ";
+	private static $updateSQL = "UPDATE M02_CATEGORY set  LABEL = ?, STARTAGE = ?, ENDAGE = ?, GENDER = ? WHERE M02CATEGORYID = ? ";
 	private static $deleteSQL = "DELETE FROM M02_CATEGORY WHERE M02CATEGORYID = ?";
 	private static $selectByIdSQL = "SELECT * FROM M02_CATEGORY where M02CATEGORYID = ?";
 
+	/**
+	 * Constructor
+	 * @param unknown $DB_con
+	 */
 	function __construct($DB_con)
 	{
 		$this->db = $DB_con;
 	}
 
-
-	public function create($categoryBO) 
+    /**
+     * 
+     * @param CategoryBO $categoryBO
+     * @return boolean
+     */
+	public function create(CategoryBO $categoryBO ) 
 	{
 		
 			$stmt = $this->db->prepare(self::$insertSQL);
@@ -33,7 +44,10 @@ class CategoryDao
 			return true;
 	}
 	
-
+    /**
+     * 
+     * @return multitype:\com\numeracy\BO\CategoryBO
+     */
 	public function getAllCategory()
 	{
 	    
@@ -46,7 +60,7 @@ class CategoryDao
 
 			foreach ($values as $row) {
 			    $category = new CategoryBO();
-			    $category->setId($row['ID']);
+			    $category->setCategoryId($row['ID']);
 			    $category->setLabel($row['LABEL']);
 			    $category->setStartAge($row['STARTAGE']);
 			    $category->setEndAge($row['ENDAGE']);
@@ -60,19 +74,26 @@ class CategoryDao
 	
 	}
 	
-	public function getById($categoryBO)
+	/**
+	 * 
+	 * @param CategoryBO $categoryBO
+	 * @return \com\numeracy\BO\CategoryBO
+	 */
+	public function getById(CategoryBO $categoryBO)
 	{
 		 
-		$category = null;
+	   // (com\numeracy\BO\CategoryBO())$categoryBO;
+	    
+	    $category = new CategoryBO();
 		
 		$stmt = $this->db->prepare(self::$selectByIdSQL);
-		$id =  intval($categoryBO->getId());
+		$id =  intval($categoryBO->getCategoryId());
 		$stmt->execute(array($id));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		
 		if($row != null){
 		$category = new CategoryBO();
-		$category->setId($row['M02CATEGORYID']);
+		$category->setCategoryId($row['M02CATEGORYID']);
 		$category->setLabel($row['LABEL']);
 		$category->setStartAge($row['STARTAGE']);
 		$category->setEndAge($row['ENDAGE']);
@@ -82,48 +103,41 @@ class CategoryDao
 		}
 		
 		return $category;
-	
 	}
 	
-	
-	public function update($categoryBO)
+	/**
+	 * 
+	 * @param CategoryBO $categoryBO
+	 * @return boolean
+	 */
+	public function update(CategoryBO $categoryBO)
 	{
 		
 		$stmt = $this->db->prepare(self::$updateSQL);
-		
-		$id =  $categoryBO->getId();
-		$label = $categoryBO->getLabel();
-		$startAge = $categoryBO->getStartAge();
-		$endAge = $categoryBO->getEndAge();
-		$gender = $categoryBO->getGender();
-					
-		$stmt->bindparam(":id",$id);
-		$stmt->bindparam(":label",$label);
-		$stmt->bindparam(":startAge",$startAge );
-		$stmt->bindparam(":endAge",$endAge);
-		$stmt->bindparam(":gender",$gender);
 			
-		$stmt->execute();
+		$stmt->execute(array($categoryBO->getLabel(),$categoryBO->getStartAge(),$categoryBO->getEndAge(), $categoryBO->getGender(),  $categoryBO->getCategoryId()));
 			
 		return true;
 	}
 	
-	
-	public function delete($ids)
+	/**
+	 * 
+	 * @param array $ids
+	 * @return boolean
+	 */
+	public function delete(array $ids)
 	{
 		if (is_array($ids) || is_object($ids))
 		{
-		foreach ($ids as $id){
-			
-		$stmt = $this->db->prepare(self::$deleteSQL);
-		$stmt->execute(array($id));
-		
-		}
+    		foreach ($ids as $id){
+    			
+    		  $stmt = $this->db->prepare(self::$deleteSQL);
+    		  $stmt->execute(array($id));
+    		}
 		}
 			
 		return true;
 	}
-
 
 }
 

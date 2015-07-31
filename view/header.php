@@ -32,6 +32,7 @@
  
  <a href="../view" class="btn btn-success btn-lg" role="button" > Home</a>
  <a href="../view/manageCategory.php" class="btn btn-success btn-lg" role="button" > Manage Category</a>
+  <a href="../view/manageLevel.php" class="btn btn-success btn-lg" role="button" > Manage Level</a>
     
 </div>
 <br>

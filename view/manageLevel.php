@@ -3,7 +3,7 @@
 
 <div class="container">
 
-	<p class="btn-info">Manage Category</p>
+	<p class="btn-info">Manage Level</p>
 	<div ng-app="myApp">
 		<div ng-controller="categoryCtrl">
 
@@ -12,7 +12,7 @@
 				<table class='table table-bordered table-hover table-striped'>
 
 					<tr>
-						<td>Category</td>
+						<td>Level</td>
 						<td><input type='text' name='category' ng-model="fields.category"
 							class='form-control' required></td>
 					</tr>
@@ -48,7 +48,7 @@
 								ng-click="myData.createNew(item, $event)">Save</button>&nbsp;&nbsp; Response from server: {{myData.fromServer}}
 						<br>
 						<br>
-			<p class="btn-info">All Categories</p>
+			<p class="btn-info">All Levels</p>
 			<!-- <div id="grid1" ui-grid="{ data: myData.gridData }" class="grid"></div> -->
 			
       
@@ -133,7 +133,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 			  $scope.gridOptions.columnDefs = [
 			      //{name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.rows.indexOf(row)}}</div>'},            			  
 			     {name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>'},
-			    { name: 'categoryId', displayName: 'S.No', enableCellEdit: false,width: 70, visible:false  },
+			    { name: 'id', displayName: 'S.No', enableCellEdit: false,width: 70, visible:false  },
 			    { name: 'label', displayName: 'CategoryLabel', width: 300  },
 			    { name: 'startAge', displayName: 'Start Age', enableCellEdit: true, width: 200 },
 			    { name: 'endAge', displayName: 'End Age', width: 200},
@@ -151,7 +151,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 		              // $scope.msg.lastCellEdited = 'edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
 		               $scope.msg.updateVal = {};
 			              // $scope.msg.updateVal = {'id': rowEntity.id, ''+colDef.name : newValue };
-		               $scope.msg.updateVal.id=rowEntity.categoryId;
+		               $scope.msg.updateVal.id=rowEntity.id;
 		               $scope.msg.updateVal[colDef.name]= newValue ;
 		              // 
 			          	$scope.$apply();
@@ -198,7 +198,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
             	angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
             	    //$scope.gridOptions.data.splice($scope.gridOptions.data.lastIndexOf(data), 1);
             	   // alert("deletemsg "+ data.id);
-            	      $scope.myData.selectedids.push(data.categoryId);
+            	      $scope.myData.selectedids.push(data.id);
             	  });
 
 
