@@ -1,7 +1,6 @@
 <?php
 
-require __DIR__ . '\CategoryDaoInterface.php';
-
+namespace com\numeracy\Dao;
 
 include_once '../bo/M02CategoryBO.php';
 

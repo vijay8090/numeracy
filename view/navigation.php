@@ -14,6 +14,9 @@
                     <a href="../view/BOGenerator.php">Generate BO</a>
                 </li>
                 <li>
+                    <a href="../view/DaoGenerator.php">Generate DAO</a>
+                </li>
+                <li>
                     <a href="../view/manageCategory.php">Manage Category</a>
                 </li>
                <!--  <li >

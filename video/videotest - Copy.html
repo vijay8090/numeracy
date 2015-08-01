@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Streaming Video with Rackspace CDN</title>
+</head>
+<body>
+<h1>Streaming Video with Rackspace CDN</h1>
+<p>
+<b>Instructions:</b><br/>
+<ol>
+<li>After you have uploaded the files to your Cloud Files account, view the links for the CDN-enable content.</li>
+<li>Use the HTTP link from the .png file and add it to the code.</li>
+<li>Use the HTTP link from the .mp4 file and add it to the code</li>
+<li>Use the HTTP link from the .ogv file and add it to the code</li>
+<li>Use the HTTP link from the .webm file and add it to the code</li> 
+<li>Upload the web page with the links to the video & image files on your account.</li>
+</ol>
+
+<p>
+The image file (Snowball.png) is the image that displays as a placeholder before your visitor starts the video. The multiple formats ensure that your video can be seen across most modern browsers.
+</p>
+
+<p>
+When you use your own videos, you might find the Miro Video Converter useful to convert your videos into the alternate formats. You may download this free utility directly from <a href="http://www.mirovideoconverter.com/">the Miro site</a> or from <a href="https://itunes.apple.com/us/app/miro-video-converter-mvc/id412699210?mt=12">the Apple iTunes store</a>.
+</p>
+
+<p>
+<b>Sample code:</b>
+<br/><br/>
+<pre>
+&lt;video width="356" height="200" controls poster="full/http/link/to/image/file.png"  &gt;<br/>
+&lt;source src="full/link/to/http/mp4/video/file.mp4" type="video/mp4" /&gt;<br/>
+&lt;source src="full/link/to/http/ogv/video/file.ogv" type="video/ogg" /&gt;<br/>
+&lt;source src="full/link/to/http/webm/video/file.wbem" type="video/webm" /&gt;<br/>
+&lt;em>Sorry, your browser doesn't support HTML5 video.&lt;/em&gt;<br/>
+&lt;/video&gt;<br/>
+</pre>
+</p>
+
+
+<p>
+Here is what you should see when it's working:
+</p>
+<p>
+<video width="356" height="200" 
+poster="http://0639ac876cdeb83a534d-95c931daa7c80b903aae4215b472f9f8.r4.cf1.rackcdn.com/Snowball.png" 
+controls>
+  <source src="http://81310752d5730fb4ef3c-221b4998ec12974102282b6d4a8fafbe.r2.cf1.rackcdn.com/Snowball.mp4" type="video/mp4" />
+  <source src="http://81310752d5730fb4ef3c-221b4998ec12974102282b6d4a8fafbe.r2.cf1.rackcdn.com/Snowball.ogv" type="video/ogg" />
+  <source src="http://81310752d5730fb4ef3c-221b4998ec12974102282b6d4a8fafbe.r2.cf1.rackcdn.com/Snowball.webm" type="video/webm" />
+  <em>Sorry, your browser doesn't support HTML5 video.</em>
+</video>
+</p>
+
+
+
+
+
+</body>
+</html>
