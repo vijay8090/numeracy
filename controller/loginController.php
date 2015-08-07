@@ -2,6 +2,8 @@
 
 include_once '../util/DbUtil.php';
 
+use com\numeracy\util\DbUtil;
+
 session_start(); // Starting Session
 $error='test'; // Variable To Store Error Message
 if (isset($_POST['submit'])) {
@@ -22,7 +24,9 @@ $tableName = "";
 
 $pdo = DbUtil::connect();
 
-$sql = "select * from login where username='".$username."' AND password= '".$password."' ";
+$sql = "SELECT M14LOGINID, USERNAME, PASSWORD, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY FROM M14_LOGIN where username='".$username."' AND password= '".$password."' ORDER BY M14LOGINID DESC ";
+
+//$sql = "select * from login where username='".$username."' AND password= '".$password."' ";
 
 
 //$sql = "select table_name from information_schema.tables where table_schema='numeracy'";
@@ -43,7 +47,7 @@ if($values != null){
 			
 		foreach ($values as $row) {
 				
-			$tableName = $row['username'];
+			$tableName = $row['USERNAME'];
 			
 		}
 		

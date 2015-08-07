@@ -1,7 +1,19 @@
 <?php
+
+include_once '../util/CrossBrowserHead.php';
+include_once '../util/CommonUtil.php';
+include_once '../facade/DaoFacade.php';
+
+// use PDO;
+use com\numeracy\util\CommonUtil;
+use com\numeracy\facade\DaoFacade;
+
+
 $ds  = DIRECTORY_SEPARATOR;  //1
  
-$storeFolder = 'uploads';   //2
+$storeFolder = '../uploads';   //2
+
+
  
 if (!empty($_FILES)) {
      

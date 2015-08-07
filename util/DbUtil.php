@@ -1,5 +1,8 @@
 <?php
 
+namespace com\numeracy\util;
+
+use PDO;
 /*
  * As you can see, we are using PDO for database access. There are a lot of benefits of using PDO. One of the most significant benefits is that it provides a uniform method of access to multiple databases.
 

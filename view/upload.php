@@ -27,7 +27,7 @@
 <form action="../controller/UploadController.php" class="dropzone"></form>
 </div>
 <?php 
-$directory = "C:/wamp/www/numeracy/controller/uploads";
+$directory = "C:/wamp/www/numeracy/uploads";
 
 //echo scanDirectoryImages("../controller/uploads");
 
@@ -39,7 +39,7 @@ while($it->valid()) {
     if (!$it->isDot()) {
         
 			echo "<table> <tr> <td>";
-          echo " <img class=clientlogo src='../controller/uploads/".$it->getSubPathName()."' alt='".$it->getSubPathName()."' width='200' height='120' >";
+          echo " <img class=clientlogo src='../uploads/".$it->getSubPathName()."' alt='".$it->getSubPathName()."' width='200' height='120' >";
 		echo " </td><tr><td>";
 		echo " <a href='../controller/uploads/".$it->getSubPathName()."' alt='".$it->getSubPathName()."' >Download </a>";
 		//  echo $it->getSubPathName();     

@@ -3,8 +3,8 @@
 
 include_once '../util/CrossBrowserHead.php';
 include_once '../util/DbUtil.php';
-include_once '../dao/CategoryDao.php';
-include_once '../bo/CategoryBO.php';
+include_once '../dao/M02CategoryDao.php';
+include_once '../bo/M02CategoryBO.php';
 include_once '../util/util.php';
 
 $data = json_decode(file_get_contents("php://input"));

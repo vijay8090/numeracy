@@ -126,8 +126,8 @@ class VideoStream
 }
 
 
-$stream = new VideoStream("../video/Subtraction.mp4");
-//$stream = new VideoStream("../video/Snowball.mp4");
+//$stream = new VideoStream("../video/Subtraction.mp4");
+$stream = new VideoStream("../video/Snowball.mp4");
 $stream->start();
 
 ?>

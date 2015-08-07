@@ -13,15 +13,19 @@
 
 					<tr>
 						<td>Category</td>
-						<td><input type='text' name='category' ng-model="fields.category"
-							class='form-control' required></td>
+						<td><input type='text' name='label' ng-model="fields.label"
+							class='form-control' required>
+							Status : <select ng-model="fields.m11statusid" ng-options="item.m11statusid as item.label for item in statusData">
+    <option value="-1" >Select Status</option>
+</select>
+							</td>
 					</tr>
 
 					<tr>
 						<td>Start Age</td>
-						<td><input type='text' name='startAge' ng-model="fields.startAge"
+						<td><input type='text' name='startAge' ng-model="fields.startage"
 							class='form-control' required> End Age : 
-						<input type='text' name='endAge' ng-model="fields.endAge"
+						<input type='text' name='endAge' ng-model="fields.endage"
 							class='form-control' required></td>
 					</tr>
 					
@@ -54,7 +58,7 @@
       
       <button type="button" class="btn btn-success" ng-disabled="!gridApi.grid.options.multiSelect" ng-click="selectAll()">Select All</button>
       <button type="button" class="btn btn-success" ng-click="clearAll()">Clear All</button>
-       <button type="button" class="btn btn-success" ng-click="myData.delete()">delete selected</button>  <span ng-bind="myData.deletemsg"></span>
+       <button type="button" class="btn btn-success" ng-click="myData.deleteFn()">delete selected</button>  <span ng-bind="myData.deletemsg"></span>
       <br>
 			 
 			<div ui-grid="gridOptions" ui-grid-edit ui-grid-selection ui-grid-cellnav ui-grid-pagination ui-grid-exporter  class="grid"></div>
@@ -72,8 +76,13 @@
 
 var app = angular.module('myApp', ['ngTouch', 'ui.grid', 'ui.grid.selection','ui.grid.edit', 'ui.grid.cellNav', 'ui.grid.pagination', 'ui.grid.exporter']);
 
+var $globalData = {};
+
+$globalData.statusData =[{"id":-1,"value":"select"},{"id":1,"value":"test"},{"id":2,"value":"best"}];
+
 app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstants', function($scope, $http) {
 
+	$scope.statusData = [];
 	//$scope.gridOptions = { enableRowSelection: true, enableRowHeaderSelection: false };
 			 $scope.gridOptions = {  
 					 enableGridMenu: true,
@@ -132,13 +141,16 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 			 
 			  $scope.gridOptions.columnDefs = [
 			      //{name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.rows.indexOf(row)}}</div>'},            			  
-			     {name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>'},
+			    {name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>',width: 70},
 			    { name: 'm02categoryid', displayName: 'S.No', enableCellEdit: false,width: 70, visible:false  },
 			    { name: 'label', displayName: 'CategoryLabel', width: 300  },
-			    { name: 'startage', displayName: 'Start Age', enableCellEdit: true, width: 200 },
-			    { name: 'endage', displayName: 'End Age', width: 200},
-			    { name: 'gender', displayName: 'Gender', width: 100}
+			    { name: 'startage', displayName: 'Start Age', type: 'number',enableCellEdit: true, width: 200 },
+			    { name: 'endage', displayName: 'End Age', type: 'number',width: 200},
+			    { name: 'gender', displayName: 'Gender', width: 100 , editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'gender', editDropdownOptionsArray: [{ 'id': 'A', 'gender': 'A' },{ 'id': 'M', 'gender': 'M' },{ 'id': 'F', 'gender': 'F' }] },
+			    { name: 'm11statusid', displayName: 'Status', width: 100, cellFilter: 'mapStatus', editableCellTemplate: 'ui-grid/dropdownEditor',editDropdownValueLabel: 'value', editDropdownRowEntityOptionsArrayPath:'options'},
+			    { name: 'createdon', displayName: 'CreatedOn', width: 100, enableCellEdit: false, width: 200}
 			    
+			   
 			  ];
 
 			     
@@ -179,17 +191,15 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 
             $scope.myData.intializeForm = function() {
 
-            $scope.master = {category:"Category-", startAge:"6", endAge:"12", gender:"M"};
+            $scope.master = {label:"Category-", startage:"6", endage:"12", gender:"M", m11statusid:6};
             $scope.reset = function() {
                 $scope.fields = angular.copy($scope.master);
             };
             $scope.reset();
-            }
+            };
 
             
-          
-            
-            $scope.myData.delete = function() {
+            $scope.myData.deleteFn = function() {
 
             	$scope.myData.selectedids = new Array();
                 
@@ -268,6 +278,8 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 
             	var FormData = $scope.fields;  
 
+            	if(FormData.m11statusid != -1){
+
             	FormData.btn_action ="save"; // controller action
             	
                 var responsePromise = $http.post(url, FormData);
@@ -287,6 +299,8 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
                 responsePromise.error(function(response) {
                     alert("AJAX failed!" + JSON.stringify(responsePromise));
                 });
+                
+            	}
             }
 
             // Get All Category
@@ -308,6 +322,17 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
              if(obj.message == 'success'){
             	 $scope.gridOptions.data  = obj.data;
 
+            	 obj.data.forEach( function(objtest){
+           		  // alert(obj.m11statusid);
+           		   objtest.startage = parseInt(objtest.startage);
+           		   objtest.endage = parseInt(objtest.endage);
+           		   objtest.options =  $globalData.statusData;
+
+
+           		//data[i].foo = {bar: [{baz: 2, options: $globalData.statusData}]}
+           		
+           		  });  
+
             	/*  $scope.gridOptions.data.forEach( function( row, index){
             		    row.sno = index+1;
             		  }); */
@@ -323,12 +348,104 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 
            }
 
+
+            // Get All Category
+            $scope.myData.getAllStatus = function() {
+
+            var url1 =  "../controller/StatusController.php";
+
+            //	alert("getAllCategory!" );
+                
+        	var FormData = {
+          		  'btn_action' : 'getAllStatus'
+            };
+		    
+            var responsePromise = $http.post(url1, FormData);
+
+            responsePromise.success(function(response) {
+             //	 alert("AJAX success!" + JSON.stringify(response));
+             //	 alert("AJAX success!" );
+             var obj = 	JSON.parse(response);
+            // alert(obj.message);
+             if(obj.message == 'success'){
+
+            	  $scope.statusData = obj.data;
+            	// $scope.gridOptions.data  = obj.data;
+
+            	   $scope.statusData.forEach( function(obj){
+            		  // alert(obj.m11statusid);
+            		   
+            		   obj.m11statusid = parseInt(obj.m11statusid) ;
+            		   obj.id =  obj.m11statusid;
+            		   obj.value = obj.label;
+            		  });  
+
+            	   $globalData.statusData = obj.data;
+            	 
+             } else {
+            	 $scope.myData.fromServer = obj.message;
+             }
+              });
+              
+              responsePromise.error(function(response) {
+                  alert("AJAX failed!" + response);
+              });
+
+           }
+
             // call form intializer after the page load
             $scope.myData.intializeForm();
+
+            $scope.myData.getAllStatus();
             // call form get All Category after the page load
             $scope.myData.getAllCategory();
+
+          
             
-        } ]);
+        } ])
+        
+        .filter('mapStatus', function() {
+ 
+  return function(input) {
+
+
+	/*   $scope.statusData.forEach( function(obj){
+		  // alert(obj.m11statusid);
+		   if(obj.m11statusid = parseInt(input) ){
+			   return obj.label;
+			   
+		   }
+		  });  
+
+	  return ''; */
+
+	  
+     if (!input){
+    	 return '';
+    } else {
+
+
+    	/*  $globalData.statusData.forEach( function(obj){
+    		 if(obj.id == input){
+             	return "sadsa"+obj.value;
+             }
+    	 }); */
+
+    	 var result = '';
+    	
+         for(var i=0;i< $globalData.statusData.length;i++){
+            var obj= $globalData.statusData[i];
+            
+            if(obj.id == input){
+            	result =  obj.value;
+            	break;
+            }
+        } 
+      return result; 
+    } 
+  };
+})
+;
 
   </script>
 

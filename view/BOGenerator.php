@@ -9,6 +9,7 @@
 			
 		//use com\vijay\util\DbUtil ;
 		require_once('../util/DbUtil.php');
+		use com\numeracy\util\DbUtil;
 		
 		$endChar ="<br/>";
 		
@@ -40,13 +41,12 @@
 					
 					print("<div class='alert alert-danger clearfix'> &lt;?php");
 					
-					print('<br/>
-
-							namespace com\numeracy\BO; <br/>
-							require __DIR__ . "\BaseBO.php"; <br/>
-							use com\numeracy\BO\BaseBO; <br/> ' );
+					print('<br/>namespace com\numeracy\BO; <br/>');
+					//print('	require __DIR__ . "\BaseBO.php"; <br/>use com\numeracy\BO\BaseBO; <br/> ' );
 					
-					print("class ".dashesToCamelCase($tableName,true)."BO extends BaseBO {<br/>");
+					//print("class ".dashesToCamelCase($tableName,true)."BO extends BaseBO {<br/>");
+					
+					print("class ".dashesToCamelCase($tableName,true)."BO  {<br/>");
 					
 					$tableArray[] = $row['table_name'];
 					
@@ -118,7 +118,7 @@
 				
 			
 				
-				$method1 = 
+				$iterateVisible = 
 		' public function iterateVisible() {  <br/>
 			&nbsp;&nbsp;&nbsp;   $json = "{";  <br/>
 			 
@@ -133,7 +133,9 @@
 			&nbsp;&nbsp;&nbsp;   return $json;  <br/>			
 		}  <br/>';
       		
-				print($method1);
+				print($iterateVisible);
+				
+				print(printImportMethod());
       		
 			}
 		
@@ -144,7 +146,18 @@
 		}
 		
 		
-		
+		function printImportMethod(){
+			
+			$content='public function import( $data)  <br/>
+	&nbsp;&nbsp;&nbsp;   {  <br/>
+		&nbsp;&nbsp;&nbsp;   foreach (get_object_vars($data) as $key => $value) { <br/>
+		&nbsp;&nbsp;&nbsp;   	$this->$key = $value; <br/>
+		&nbsp;&nbsp;&nbsp;   } <br/>
+	&nbsp;&nbsp;&nbsp;   } <br/>';
+			
+			return $content;
+			
+		}
 		
 		
 		function dashesToCamelCase($string, $capitalizeFirstCharacter = false)

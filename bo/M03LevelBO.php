@@ -1,23 +1,20 @@
 <?php
 namespace com\numeracy\BO; 
-class M02CategoryBO {
-    private $m02categoryid;
+class M03LevelBO {
+    private $m03levelid;
     private $label;
     private $m11statusid;
-    private $startage;
-    private $endage;
-    private $gender;
     private $createdon;
     private $createdby;
     private $modifiedon;
     private $modifiedby;
-public function getM02categoryid() 
+public function getM03levelid() 
 { 
-    return $this->m02categoryid; 
+    return $this->m03levelid; 
 } 
-public function setM02categoryid($m02categoryid) 
+public function setM03levelid($m03levelid) 
 { 
-    $this->m02categoryid = $m02categoryid; 
+    $this->m03levelid = $m03levelid; 
 } 
 public function getLabel() 
 { 
@@ -34,30 +31,6 @@ public function getM11statusid()
 public function setM11statusid($m11statusid) 
 { 
     $this->m11statusid = $m11statusid; 
-} 
-public function getStartage() 
-{ 
-    return $this->startage; 
-} 
-public function setStartage($startage) 
-{ 
-    $this->startage = $startage; 
-} 
-public function getEndage() 
-{ 
-    return $this->endage; 
-} 
-public function setEndage($endage) 
-{ 
-    $this->endage = $endage; 
-} 
-public function getGender() 
-{ 
-    return $this->gender; 
-} 
-public function setGender($gender) 
-{ 
-    $this->gender = $gender; 
 } 
 public function getCreatedon() 
 { 

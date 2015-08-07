@@ -15,19 +15,19 @@ try {
 	
 	if ($data->btn_action == 'save') {
 		
-		echo CommonUtil::getSuccessFailureJson($facade->createNewCategory ( $data ));
+		echo CommonUtil::getSuccessFailureJson($facade->createNewLevel ( $data ));
 		
 	} else if ($data->btn_action == 'update') {
 		
-		echo CommonUtil::getSuccessFailureJson($facade->updateCategory ( $data ));
+		echo CommonUtil::getSuccessFailureJson($facade->updateLevel ( $data ));
 		
 	} else if ($data->btn_action == 'delete') {
 		
-		echo CommonUtil::getSuccessFailureJson($facade->deleteCategory ( $data ));
+		echo CommonUtil::getSuccessFailureJson($facade->deleteLevel ( $data ));
 		
-	} else if ($data->btn_action == 'getAllCategory') {
+	} else if ($data->btn_action == 'getAll') {
 		
-		echo $facade->getAllCategory ();
+		echo $facade->getAllLevel();
 		
 	} else {
 		echo '{"message":"action not found"}';

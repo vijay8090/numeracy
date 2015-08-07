@@ -19,9 +19,9 @@
                 <li>
                     <a href="../view/manageCategory.php">Manage Category</a>
                 </li>
-               <!--  <li >
+                 <li >
                     <a href="../view/manageLevel.php">Manage Level</a>
-                </li> -->
+                </li> 
                 <li>
                     <a href="../view/upload.php">Upload</a>
                 </li>
