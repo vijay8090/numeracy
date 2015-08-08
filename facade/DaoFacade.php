@@ -11,12 +11,13 @@ include_once '../util/CommonUtil.php';
 include_once '../bo/M02CategoryBO.php';
 include_once '../bo/M03LevelBO.php';
 include_once '../bo/M11StatusBO.php';
+include_once '../bo/M04ChapterBO.php';
 
 // dao includes
 include_once '../dao/M02CategoryDao.php';
 include_once '../dao/M03LevelDao.php';
 include_once '../dao/M11StatusDao.php';
-
+include_once '../dao/M04ChapterDao.php';
 // Util
 use com\numeracy\util\DbUtil;
 use com\numeracy\util\CommonUtil;
@@ -33,6 +34,9 @@ use com\numeracy\Dao\M03LevelDao;
 use com\numeracy\BO\M11StatusBO;
 use com\numeracy\Dao\M11StatusDao;
 
+// Chapter
+use com\numeracy\BO\M04ChapterBO;
+use com\numeracy\Dao\M04ChapterDao;
 
 class DaoFacade {
 	
@@ -238,6 +242,105 @@ class DaoFacade {
 	
 	
 	/*****************************************level Operation  end *************************************************************/
+	
+	
+	/*****************************************Chapter Operation start*************************************************************/
+	
+	
+	/**
+	 *
+	 * @param unknown $data
+	 */
+	public function createNewChapter($data) {
+		$result = false;
+	
+	
+		$obj = new M04ChapterBO();
+	
+		$obj->import($data);
+	
+		$pdo = DbUtil::connect ();
+	
+		$dao = new M04ChapterDao( $pdo );
+	
+		$result = $dao->create ( $obj );
+	
+		DbUtil::disconnect ();
+	
+		return $result;
+	}
+	/**
+	 *
+	 * @param unknown $data
+	 */
+	public function updateChapter($data) {
+		$result = false;
+	
+		$pdo = DbUtil::connect ();
+	
+		$dao = new M04ChapterDao( $pdo );
+	
+		// create new category object
+		$obj = new M04ChapterBO();
+	
+		// get id from request
+		if (property_exists ( $data, 'id' ))
+			$obj->setM04chapterid( $data->id );
+			
+		// get the persistance obj from db
+		$obj = $dao->getById ( $obj );
+	
+		$obj->import($data);
+	
+	
+		$result = $dao->update ( $obj );
+	
+		DbUtil::disconnect ();
+	
+		return $result;
+	}
+	
+	/**
+	 *
+	 * @param unknown $data
+	 */
+	public function deleteChapter($data) {
+		$result = false;
+	
+		$idstr = $data->ids;
+	
+		$ids = explode ( ",", $idstr );
+	
+		$pdo = DbUtil::connect ();
+	
+		$dao = new M04ChapterDao( $pdo );
+	
+		$result = $dao->delete ( $ids );
+	
+		DbUtil::disconnect ();
+	
+		return $result;
+	}
+	
+	/**
+	 *
+	 */
+	public function getAllChapter() {
+	
+		$pdo = DbUtil::connect ();
+	
+		$dao = new M04ChapterDao( $pdo );
+	
+		$objArray = $dao->getAll();
+	
+		DbUtil::disconnect ();
+	
+		return  CommonUtil::objArrayToJson ( $objArray );
+	}
+	
+	
+	/*****************************************Chapter Operation  end *************************************************************/
+	
 	
 	
 	/*****************************************status Operation start*************************************************************/
