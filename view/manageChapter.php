@@ -12,7 +12,7 @@
 
 					<tr>
 						<td>Chapter Name</td>
-						<td><input type='text' name='label' ng-model="fields.chapterName" class='form-control' required>
+						<td><input type='text' name='chaptername' ng-model="fields.chaptername" class='form-control' required>
 							Status : <select ng-model="fields.m11statusid" ng-options="item.m11statusid as item.label for item in statusData">
 										<option value="-1" >Select Status</option>
 									</select>
@@ -21,13 +21,13 @@
 					
 					<tr>
 						<td>Chapter Number</td>
-						<td><input type='text' name='chapterNumber' ng-model="fields.chapterNumber" class='form-control' required></td>
+						<td><input type='text' name='chapternumber' ng-model="fields.chapternumber" class='form-control' required></td>
 						
 					</tr>
 					
 					<tr>
 						<td>Short Description</td>
-						<td><textarea type='text' name='shortDesc' ng-model="fields.shortDesc" class='form-control' maxlength="150" required></textarea></td>
+						<td><textarea type='text' name='shortdesc' ng-model="fields.shortdesc" class='form-control' maxlength="150" required></textarea></td>
 					
 					</tr>
 					
@@ -137,11 +137,11 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 			      //{name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.rows.indexOf(row)}}</div>'},            			  
 			    {name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>',width: 70},
 			    { name: 'm04chapterid', displayName: 'S.No', enableCellEdit: false,width: 70, visible:false  },
-			    { name: 'label', displayName: 'Chapter Name', width: 200  },
+			    { name: 'chaptername', displayName: 'Chapter Name', width: 200  },
 				{ name: 'chapternumber', displayName: 'Chapter Number',  type: 'number', enableCellEdit: false, width: 200  },
 				{ name: 'shortdesc', displayName: 'Short Description', type: 'text', width: 200  },
 				{ name: 'desc', displayName: 'Description', type: 'text', width: 300  },			  
-			    { name: 'm11statusid', displayName: 'Status', width: 100, cellFilter: 'mapStatus', editableCellTemplate: 'ui-grid/dropdownEditor',editDropdownValueLabel: 'value', editDropdownRowEntityOptionsArrayPath:'options'},
+			    { name: 'm11statusid', displayName: 'Status', width: 100, cellFilter: 'mapStatus', editableCellTemplate: 'ui-grid/dropdownEditor',editDropdownValueLabel: 'value', editDropdownRowEntityOptionsArrayPath:'options'}
 				
 			    //{ name: 'createdon', displayName: 'CreatedOn', width: 100, enableCellEdit: false, width: 200},
 				//{ name: 'createdby', displayName: 'CreatedBy', width: 100, enableCellEdit: false, width: 200},
@@ -189,11 +189,11 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 
             $scope.myData.intializeForm = function() {
 
-            $scope.master = {label:"", chapternumber:"", shortdesc:"", desc:"",  m11statusid:6};
-            $scope.reset = function() {
-                $scope.fields = angular.copy($scope.master);
-            };
-            $scope.reset();
+           // $scope.master = {chaptername:"", chapternumber:"", shortdesc:"", desc:"",  m11statusid:6};
+          //  $scope.reset = function() {
+         //       $scope.fields = angular.copy($scope.master);
+         //   };
+          //  $scope.reset();
             };
 
             
@@ -274,7 +274,9 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
             // create new Chapter
             $scope.myData.createNew = function(item, event) {
 
-            	var FormData = $scope.fields;  
+            	var FormData = $scope.fields; 
+            	//obj.m11statusid = parseInt(obj.m11statusid) ;
+            	FormData.chapternumber = parseInt(FormData.chapternumber); 
 
             	if(FormData.m11statusid != -1){
 
