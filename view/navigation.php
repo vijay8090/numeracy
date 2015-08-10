@@ -21,6 +21,9 @@
                 </li>
                  <li >
                     <a href="../view/manageLevel.php">Manage Level</a>
+                </li>
+                <li >
+                    <a href="../view/manageChapter.php">Manage Chapter</a>
                 </li> 
                 <li>
                     <a href="../view/upload.php">Upload</a>
