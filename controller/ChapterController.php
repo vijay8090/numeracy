@@ -25,7 +25,7 @@ try {
 		
 		echo CommonUtil::getSuccessFailureJson($facade->deleteChapter ( $data ));
 		
-	} else if ($data->btn_action == 'getAllChapter') {
+	} else if ($data->btn_action == 'getAll') {
 		
 		echo $facade->getAllChapter ();
 		
