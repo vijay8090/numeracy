@@ -11,10 +11,16 @@
                     <a href="../view">Home</a>
                 </li>
                 <li>
-                    <a href="../view/BOGenerator.php">Generate BO</a>
+                    <a href="../view/GenerateBO.php">Generate BO</a>
                 </li>
                 <li>
-                    <a href="../view/DaoGenerator.php">Generate DAO</a>
+                    <a href="../view/GenerateDao.php">Generate DAO</a>
+                </li>
+                <li>
+                    <a href="../view/GenerateController.php">Generate Controller</a>
+                </li>
+                <li>
+                    <a href="../view/GenerateFacade.php">Generate Facade</a>
                 </li>
                 <li>
                     <a href="../view/manageCategory.php">Manage Category</a>

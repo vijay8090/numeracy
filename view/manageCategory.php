@@ -69,7 +69,7 @@
 	<script>
 
 
-	var url =  "../controller/CategoryController.php";
+	var url =  "../controller/M02CategoryController.php";
 //ui-grid-cellnav
 
 	//,'ui.grid.edit', 'ui.grid.cellNav'

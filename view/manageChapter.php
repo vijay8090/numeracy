@@ -66,7 +66,7 @@
 	<script>
 
 
-	var url =  "../controller/ChapterController.php";
+	var url =  "../controller/M04ChapterController.php";
 //ui-grid-cellnav
 
 	//,'ui.grid.edit', 'ui.grid.cellNav'

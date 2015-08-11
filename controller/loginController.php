@@ -1,10 +1,13 @@
 <?php
 
+//session_start(); // Starting Session
+
+include_once '../util/CrossBrowserHead.php';
 include_once '../util/DbUtil.php';
 
 use com\numeracy\util\DbUtil;
 
-session_start(); // Starting Session
+
 $error='test'; // Variable To Store Error Message
 if (isset($_POST['submit'])) {
 if (empty($_POST['inputEmail']) || empty($_POST['inputPassword'])) {
