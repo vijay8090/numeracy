@@ -19,12 +19,21 @@
                 <li>
                     <a href="../view/manageCategory.php">Manage Category</a>
                 </li>
-                 <li >
+                 <li>
                     <a href="../view/manageLevel.php">Manage Level</a>
                 </li>
-                <li >
+                <li>
                     <a href="../view/manageChapter.php">Manage Chapter</a>
-                </li> 
+                </li>
+				<li>
+                    <a href="../view/manageLesson.php">Manage Lesson</a>
+                </li>
+				<li>
+                    <a href="../view/manageQuestion.php">Manage Question</a>
+                </li>
+				<li>
+                    <a href="../view/manageAnswer.php">Manage Answer</a>
+                </li>
                 <li>
                     <a href="../view/upload.php">Upload</a>
                 </li>
