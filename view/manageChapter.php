@@ -1,10 +1,11 @@
+
 <?php include_once 'sidebarup.php';?>
 
 <div class="container">
 
-	<p class="btn-info">Manage Chapter</p>
+	<p class="btn-info">Manage Category</p>
 	<div ng-app="myApp">
-		<div ng-controller="categoryCtrl">
+		<div ng-controller="myCtrl">
 
 			<form name="f1" method='post' action="#">
 
@@ -12,12 +13,14 @@
 
 					<tr>
 						<td>Chapter Name</td>
-						<td><input type='text' name='chaptername' ng-model="fields.chaptername" class='form-control' required>
+						<td><input type='text' name='label' ng-model="fields.chaptername"
+							class='form-control' required>
 							Status : <select ng-model="fields.m11statusid" ng-options="item.m11statusid as item.label for item in statusData">
-										<option value="-1" >Select Status</option>
-									</select>
-							</td>						
+    <option value="-1" >Select Status</option>
+</select>
+							</td>
 					</tr>
+
 					
 					<tr>
 						<td>Chapter Number</td>
@@ -33,9 +36,9 @@
 					
 					<tr>
 						<td>Description</td>
-						<td><textarea type='text' name='desc' ng-model="fields.desc" class='form-control' maxlength="1000" required></textarea></td>
+						<td><textarea type='text' name='description' ng-model="fields.description" class='form-control' maxlength="1000" required></textarea></td>
 					
-					</tr>				
+					</tr>
 					
 				</table>
 			</form>
@@ -46,7 +49,7 @@
 								ng-click="myData.createNew(item, $event)">Save</button>&nbsp;&nbsp; Response from server: {{myData.fromServer}}
 						<br>
 						<br>
-			<p class="btn-info">All Chapters</p>
+			<p class="btn-info">All Categories</p>
 			<!-- <div id="grid1" ui-grid="{ data: myData.gridData }" class="grid"></div> -->
 			
       
@@ -74,7 +77,7 @@ var $globalData = {};
 
 $globalData.statusData =[{"id":-1,"value":"select"},{"id":1,"value":"test"},{"id":2,"value":"best"}];
 
-app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstants', function($scope, $http) {
+app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstants', function($scope, $http) {
 
 	$scope.statusData = [];
 	//$scope.gridOptions = { enableRowSelection: true, enableRowHeaderSelection: false };
@@ -84,7 +87,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 					 exporterPdfDefaultStyle: {fontSize: 9},
 					    exporterPdfTableStyle: {margin: [30, 20, 30, 20]},
 					    exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-					    exporterPdfHeader: { text: "Chapter List", style: 'headerStyle' },
+					    exporterPdfHeader: { text: "Category List", style: 'headerStyle' },
 					    exporterPdfFooter: function ( currentPage, pageCount ) {
 					      return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
 					    },
@@ -137,16 +140,12 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 			      //{name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.rows.indexOf(row)}}</div>'},            			  
 			    {name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>',width: 70},
 			    { name: 'm04chapterid', displayName: 'S.No', enableCellEdit: false,width: 70, visible:false  },
-			    { name: 'chaptername', displayName: 'Chapter Name', width: 200  },
-				{ name: 'chapternumber', displayName: 'Chapter Number',  type: 'number', enableCellEdit: false, width: 200  },
-				{ name: 'shortdesc', displayName: 'Short Description', type: 'text', width: 200  },
-				{ name: 'desc', displayName: 'Description', type: 'text', width: 300  },			  
-			    { name: 'm11statusid', displayName: 'Status', width: 100, cellFilter: 'mapStatus', editableCellTemplate: 'ui-grid/dropdownEditor',editDropdownValueLabel: 'value', editDropdownRowEntityOptionsArrayPath:'options'}
-				
-			    //{ name: 'createdon', displayName: 'CreatedOn', width: 100, enableCellEdit: false, width: 200},
-				//{ name: 'createdby', displayName: 'CreatedBy', width: 100, enableCellEdit: false, width: 200},
-				//{ name: 'modifiedon', displayName: 'ModifiedOn', width: 100, enableCellEdit: false, width: 200},
-				//{ name: 'modifiedby', displayName: 'ModifiedBy', width: 100, enableCellEdit: false, width: 200}
+			    { name: 'chaptername', displayName: 'chapter name', width: 300  },
+			    { name: 'chapternumber', displayName: 'chapter number', type: 'number',enableCellEdit: true, width: 200 },
+			    { name: 'description', displayName: 'description',width: 200},
+			    { name: 'shortdesc', displayName: 'shortdesc',width: 200},
+			    { name: 'm11statusid', displayName: 'Status', width: 100, cellFilter: 'mapStatus', editableCellTemplate: 'ui-grid/dropdownEditor',editDropdownValueLabel: 'value', editDropdownRowEntityOptionsArrayPath:'options'},
+			    { name: 'createdon', displayName: 'CreatedOn', width: 100, enableCellEdit: false, width: 200}
 			    
 			   
 			  ];
@@ -189,11 +188,11 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 
             $scope.myData.intializeForm = function() {
 
-           // $scope.master = {chaptername:"", chapternumber:"", shortdesc:"", desc:"",  m11statusid:6};
-          //  $scope.reset = function() {
-         //       $scope.fields = angular.copy($scope.master);
-         //   };
-          //  $scope.reset();
+            $scope.master = {chaptername:"Chapter-", chapternumber:1, description:"", shortdesc:"", m11statusid:6};
+            $scope.reset = function() {
+                $scope.fields = angular.copy($scope.master);
+            };
+            $scope.reset();
             };
 
             
@@ -245,7 +244,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
             }
 
 
-            // create new Chapter
+            // create new Category
             $scope.myData.update = function(item, event) {
 
             	 var FormData = $scope.msg.updateVal;  
@@ -271,11 +270,10 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
                 }); 
             }
 
-            // create new Chapter
+            // create new Category
             $scope.myData.createNew = function(item, event) {
 
-            	var FormData = $scope.fields; 
-            	//obj.m11statusid = parseInt(obj.m11statusid) ;
+            	var FormData = $scope.fields;  
             	FormData.chapternumber = parseInt(FormData.chapternumber); 
 
             	if(FormData.m11statusid != -1){
@@ -303,7 +301,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
             	}
             }
 
-            // Get All Chapter
+            // Get All Category
             $scope.myData.getAll = function() {
 
             //	alert("getAll!" );
@@ -318,17 +316,16 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
              //	 alert("AJAX success!" + JSON.stringify(response));
              //	 alert("AJAX success!" );
              var obj = 	JSON.parse(response);
-             // alert(obj.message);
+            // alert(obj.message);
              if(obj.message == 'success'){
             	 $scope.gridOptions.data  = obj.data;
 
             	 obj.data.forEach( function(objtest){
-           		  
-           		   objtest.value = objtest.chaptername;
-				   objtest.value = objtest.chapternumber;
-				   objtest.value = objtest.shortdesc;
-				   objtest.value = objtest.desc;
-				 alert(obj.m11statusid);
+           		  // alert(obj.m11statusid);
+           		   objtest.startage = parseInt(objtest.startage);
+           		   objtest.endage = parseInt(objtest.endage);
+           		   objtest.options =  $globalData.statusData;
+
 
            		//data[i].foo = {bar: [{baz: 2, options: $globalData.statusData}]}
            		
@@ -350,7 +347,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
            }
 
 
-            // Get All Chapter
+            // Get All Category
             $scope.myData.getAllStatus = function() {
 
             var url1 =  "../controller/StatusController.php";
@@ -378,10 +375,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
             		   
             		   obj.m11statusid = parseInt(obj.m11statusid) ;
             		   obj.id =  obj.m11statusid;
-					   objtest.value = objtest.chaptername;
-					   objtest.value = objtest.chapternumber;
-					   objtest.value = objtest.shortdesc;
-					   objtest.value = objtest.desc;
+            		   obj.value = obj.label;
             		  });  
 
             	   $globalData.statusData = obj.data;
@@ -401,7 +395,7 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
             $scope.myData.intializeForm();
 
             $scope.myData.getAllStatus();
-            // call form get All Chapter after the page load
+            // call form get All Category after the page load
             $scope.myData.getAll();
 
           
@@ -457,3 +451,4 @@ app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridCo
 
 
 <?php include_once 'sidebardown.php';?>
+

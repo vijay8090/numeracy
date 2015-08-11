@@ -1,47 +1,41 @@
-
 <?php include_once 'sidebarup.php';?>
 
 <div class="container">
 
-	<p class="btn-info">Manage Category</p>
+	<p class="btn-info">Manage Chapter</p>
 	<div ng-app="myApp">
-		<div ng-controller="myCtrl">
+		<div ng-controller="categoryCtrl">
 
 			<form name="f1" method='post' action="#">
 
 				<table class='table table-bordered table-hover table-striped'>
 
 					<tr>
-						<td>Category</td>
-						<td><input type='text' name='label' ng-model="fields.label"
-							class='form-control' required>
+						<td>Chapter Name</td>
+						<td><input type='text' name='chaptername' ng-model="fields.chaptername" class='form-control' required>
 							Status : <select ng-model="fields.m11statusid" ng-options="item.m11statusid as item.label for item in statusData">
-    <option value="-1" >Select Status</option>
-</select>
-							</td>
-					</tr>
-
-					<tr>
-						<td>Start Age</td>
-						<td><input type='text' name='startAge' ng-model="fields.startage"
-							class='form-control' required> End Age : 
-						<input type='text' name='endAge' ng-model="fields.endage"
-							class='form-control' required></td>
+										<option value="-1" >Select Status</option>
+									</select>
+							</td>						
 					</tr>
 					
 					<tr>
-					<td>Gender</td>
-						<td>
-							<div class="radio" class='form-control' required>
-								<label> <input type="radio" name="gender" ng-model="fields.gender"
-									id="gender" value="M" checked="checked" > Male
-								</label>
-								<label> <input type="radio" name="gender" ng-model="fields.gender"
-									id="gender" value="F"> Female
-								</label>
-							</div>
-							</td>
+						<td>Chapter Number</td>
+						<td><input type='text' name='chapternumber' ng-model="fields.chapternumber" class='form-control' required></td>
+						
 					</tr>
+					
+					<tr>
+						<td>Short Description</td>
+						<td><textarea type='text' name='shortdesc' ng-model="fields.shortdesc" class='form-control' maxlength="150" required></textarea></td>
+					
+					</tr>
+					
+					<tr>
+						<td>Description</td>
+						<td><textarea type='text' name='description' ng-model="fields.description" class='form-control' maxlength="1000" required></textarea></td>
+					
+					</tr>				
 					
 				</table>
 			</form>
@@ -52,7 +46,7 @@
 								ng-click="myData.createNew(item, $event)">Save</button>&nbsp;&nbsp; Response from server: {{myData.fromServer}}
 						<br>
 						<br>
-			<p class="btn-info">All Categories</p>
+			<p class="btn-info">All Chapters</p>
 			<!-- <div id="grid1" ui-grid="{ data: myData.gridData }" class="grid"></div> -->
 			
       
@@ -69,7 +63,7 @@
 	<script>
 
 
-	var url =  "../controller/CategoryController.php";
+	var url =  "../controller/ChapterController.php";
 //ui-grid-cellnav
 
 	//,'ui.grid.edit', 'ui.grid.cellNav'
@@ -78,9 +72,9 @@ var app = angular.module('myApp', ['ngTouch', 'ui.grid', 'ui.grid.selection','ui
 
 var $globalData = {};
 
-$globalData.statusData =[{"id":-1,"value":"select"},{"id":1,"value":"test"},{"id":2,"value":"best"}];
+$globalData.statusData =[{"id":-1,"value":"select"}];
 
-app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstants', function($scope, $http) {
+app.controller("categoryCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstants', function($scope, $http) {
 
 	$scope.statusData = [];
 	//$scope.gridOptions = { enableRowSelection: true, enableRowHeaderSelection: false };
@@ -90,7 +84,7 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
 					 exporterPdfDefaultStyle: {fontSize: 9},
 					    exporterPdfTableStyle: {margin: [30, 20, 30, 20]},
 					    exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-					    exporterPdfHeader: { text: "Category List", style: 'headerStyle' },
+					    exporterPdfHeader: { text: "Chapter List", style: 'headerStyle' },
 					    exporterPdfFooter: function ( currentPage, pageCount ) {
 					      return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
 					    },
@@ -142,13 +136,17 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
 			  $scope.gridOptions.columnDefs = [
 			      //{name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.rows.indexOf(row)}}</div>'},            			  
 			    {name: 'sno',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>',width: 70},
-			    { name: 'm02categoryid', displayName: 'S.No', enableCellEdit: false,width: 70, visible:false  },
-			    { name: 'label', displayName: 'CategoryLabel', width: 300  },
-			    { name: 'startage', displayName: 'Start Age', type: 'number',enableCellEdit: true, width: 200 },
-			    { name: 'endage', displayName: 'End Age', type: 'number',width: 200},
-			    { name: 'gender', displayName: 'Gender', width: 100 , editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'gender', editDropdownOptionsArray: [{ 'id': 'A', 'gender': 'A' },{ 'id': 'M', 'gender': 'M' },{ 'id': 'F', 'gender': 'F' }] },
-			    { name: 'm11statusid', displayName: 'Status', width: 100, cellFilter: 'mapStatus', editableCellTemplate: 'ui-grid/dropdownEditor',editDropdownValueLabel: 'value', editDropdownRowEntityOptionsArrayPath:'options'},
-			    { name: 'createdon', displayName: 'CreatedOn', width: 100, enableCellEdit: false, width: 200}
+			    { name: 'm04chapterid', displayName: 'S.No', enableCellEdit: false,width: 70, visible:false  },
+			    { name: 'chaptername', displayName: 'Chapter Name', width: 200  },
+				{ name: 'chapternumber', displayName: 'Chapter Number',  type: 'number', enableCellEdit: false, width: 200  },
+				{ name: 'shortdesc', displayName: 'Short Description', type: 'text', width: 200  },
+				{ name: 'description', displayName: 'Description', type: 'text', width: 300  },			  
+			    { name: 'm11statusid', displayName: 'Status', width: 100, cellFilter: 'mapStatus', editableCellTemplate: 'ui-grid/dropdownEditor',editDropdownValueLabel: 'value', editDropdownRowEntityOptionsArrayPath:'options'}
+				
+			    //{ name: 'createdon', displayName: 'CreatedOn', width: 100, enableCellEdit: false, width: 200},
+				//{ name: 'createdby', displayName: 'CreatedBy', width: 100, enableCellEdit: false, width: 200},
+				//{ name: 'modifiedon', displayName: 'ModifiedOn', width: 100, enableCellEdit: false, width: 200},
+				//{ name: 'modifiedby', displayName: 'ModifiedBy', width: 100, enableCellEdit: false, width: 200}
 			    
 			   
 			  ];
@@ -163,7 +161,7 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
 		              // $scope.msg.lastCellEdited = 'edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue ;
 		               $scope.msg.updateVal = {};
 			              // $scope.msg.updateVal = {'id': rowEntity.id, ''+colDef.name : newValue };
-		               $scope.msg.updateVal.id=rowEntity.m02categoryid;
+		               $scope.msg.updateVal.id=rowEntity.m04chapterid;
 		               $scope.msg.updateVal[colDef.name]= newValue ;
 		              // 
 			          	$scope.$apply();
@@ -191,7 +189,7 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
 
             $scope.myData.intializeForm = function() {
 
-            $scope.master = {label:"Category-", startage:"6", endage:"12", gender:"M", m11statusid:6};
+            $scope.master = {chaptername:"", chapternumber:"", shortdesc:"", description:"",  m11statusid:6};
             $scope.reset = function() {
                 $scope.fields = angular.copy($scope.master);
             };
@@ -208,7 +206,7 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
             	angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
             	    //$scope.gridOptions.data.splice($scope.gridOptions.data.lastIndexOf(data), 1);
             	   // alert("deletemsg "+ data.id);
-            	      $scope.myData.selectedids.push(data.m02categoryid);
+            	      $scope.myData.selectedids.push(data.m04chapterid);
             	  });
 
 
@@ -247,7 +245,7 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
             }
 
 
-            // create new Category
+            // create new Chapter
             $scope.myData.update = function(item, event) {
 
             	 var FormData = $scope.msg.updateVal;  
@@ -273,10 +271,12 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
                 }); 
             }
 
-            // create new Category
+            // create new Chapter
             $scope.myData.createNew = function(item, event) {
 
-            	var FormData = $scope.fields;  
+            	var FormData = $scope.fields; 
+            	//obj.m11statusid = parseInt(obj.m11statusid) ;
+            	FormData.chapternumber = parseInt(FormData.chapternumber); 
 
             	if(FormData.m11statusid != -1){
 
@@ -303,7 +303,7 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
             	}
             }
 
-            // Get All Category
+            // Get All Chapter
             $scope.myData.getAll = function() {
 
             //	alert("getAll!" );
@@ -318,16 +318,17 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
              //	 alert("AJAX success!" + JSON.stringify(response));
              //	 alert("AJAX success!" );
              var obj = 	JSON.parse(response);
-            // alert(obj.message);
+             // alert(obj.message);
              if(obj.message == 'success'){
             	 $scope.gridOptions.data  = obj.data;
 
             	 obj.data.forEach( function(objtest){
-           		  // alert(obj.m11statusid);
-           		   objtest.startage = parseInt(objtest.startage);
-           		   objtest.endage = parseInt(objtest.endage);
-           		   objtest.options =  $globalData.statusData;
-
+           		  
+           		   objtest.value = objtest.chaptername;
+				   objtest.value = objtest.chapternumber;
+				   objtest.value = objtest.shortdesc;
+				   objtest.value = objtest.description;
+				 alert(obj.m11statusid);
 
            		//data[i].foo = {bar: [{baz: 2, options: $globalData.statusData}]}
            		
@@ -349,7 +350,7 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
            }
 
 
-            // Get All Category
+            // Get All Chapter
             $scope.myData.getAllStatus = function() {
 
             var url1 =  "../controller/StatusController.php";
@@ -369,18 +370,15 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
             // alert(obj.message);
              if(obj.message == 'success'){
 
-            	  $scope.statusData = obj.data;
-            	// $scope.gridOptions.data  = obj.data;
+            	 $scope.statusData.forEach( function(obj){
+           		  // alert(obj.m11statusid);
+           		   
+           		   obj.m11statusid = parseInt(obj.m11statusid) ;
+           		   obj.id =  obj.m11statusid;
+           		   obj.value = obj.label;
+           		  });  
 
-            	   $scope.statusData.forEach( function(obj){
-            		  // alert(obj.m11statusid);
-            		   
-            		   obj.m11statusid = parseInt(obj.m11statusid) ;
-            		   obj.id =  obj.m11statusid;
-            		   obj.value = obj.label;
-            		  });  
-
-            	   $globalData.statusData = obj.data;
+           	   $globalData.statusData = obj.data;
             	 
              } else {
             	 $scope.myData.fromServer = obj.message;
@@ -397,7 +395,7 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
             $scope.myData.intializeForm();
 
             $scope.myData.getAllStatus();
-            // call form get All Category after the page load
+            // call form get All Chapter after the page load
             $scope.myData.getAll();
 
           
@@ -453,4 +451,3 @@ app.controller("myCtrl", ['$scope', '$http', '$log', '$timeout', 'uiGridConstant
 
 
 <?php include_once 'sidebardown.php';?>
-

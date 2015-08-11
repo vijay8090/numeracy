@@ -12,11 +12,11 @@ function __construct($DB_con)
     $this->db = $DB_con; 
     } 
 
-private static $insertSQL = "INSERT INTO M04_CHAPTER (CHAPTERNAME, CHAPTERNUMBER, M11STATUSID, DESC, SHORTDESC, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+private static $insertSQL = "INSERT INTO M04_CHAPTER (CHAPTERNAME, CHAPTERNUMBER, M11STATUSID, DESCRIPTION, SHORTDESC, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-private static $selectSQL = "SELECT M04CHAPTERID, CHAPTERNAME, CHAPTERNUMBER, M11STATUSID, DESC, SHORTDESC, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY FROM M04_CHAPTER ORDER BY M04CHAPTERID DESC "; 
+private static $selectSQL = "SELECT M04CHAPTERID, CHAPTERNAME, CHAPTERNUMBER, M11STATUSID, DESCRIPTION, SHORTDESC, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY FROM M04_CHAPTER ORDER BY M04CHAPTERID DESC "; 
 
-private static $updateSQL = "UPDATE M04_CHAPTER SET CHAPTERNAME = ? , CHAPTERNUMBER = ? , M11STATUSID = ? , DESC = ? , SHORTDESC = ? , CREATEDON = ? , CREATEDBY = ? , MODIFIEDON = ? , MODIFIEDBY = ? WHERE M04CHAPTERID = ? ";
+private static $updateSQL = "UPDATE M04_CHAPTER SET CHAPTERNAME = ? , CHAPTERNUMBER = ? , M11STATUSID = ? , DESCRIPTION = ? , SHORTDESC = ? , CREATEDON = ? , CREATEDBY = ? , MODIFIEDON = ? , MODIFIEDBY = ? WHERE M04CHAPTERID = ? ";
 
 private static $deleteSQL = "DELETE FROM M04_CHAPTER WHERE M04CHAPTERID = ? ";
 
@@ -25,7 +25,7 @@ private static $selectByIdSQL = "SELECT * FROM M04_CHAPTER WHERE M04CHAPTERID = 
 public function create(M04ChapterBO $obj ) 
     { 
     $stmt = $this->db->prepare(self::$insertSQL); 
-    $stmt->execute(array($obj->getChaptername() , $obj->getChapternumber() , $obj->getM11statusid() , $obj->getDesc() , $obj->getShortdesc() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() )); 
+    $stmt->execute(array($obj->getChaptername() , $obj->getChapternumber() , $obj->getM11statusid() , $obj->getDescription() , $obj->getShortdesc() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() )); 
     return true;     
 } 
 
@@ -42,7 +42,7 @@ $obj->setM04chapterid($row['M04CHAPTERID']) ;
 $obj->setChaptername($row['CHAPTERNAME']) ; 
 $obj->setChapternumber($row['CHAPTERNUMBER']) ; 
 $obj->setM11statusid($row['M11STATUSID']) ; 
-$obj->setDesc($row['DESC']) ; 
+$obj->setDescription($row['DESCRIPTION']) ; 
 $obj->setShortdesc($row['SHORTDESC']) ; 
 $obj->setCreatedon($row['CREATEDON']) ; 
 $obj->setCreatedby($row['CREATEDBY']) ; 
@@ -59,7 +59,7 @@ $objArray[] = $obj;
 public function update(M04ChapterBO $obj ) 
     { 
     $stmt = $this->db->prepare(self::$updateSQL); 
-    $stmt->execute(array($obj->getChaptername() , $obj->getChapternumber() , $obj->getM11statusid() , $obj->getDesc() , $obj->getShortdesc() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getM04chapterid() ));
+    $stmt->execute(array($obj->getChaptername() , $obj->getChapternumber() , $obj->getM11statusid() , $obj->getDescription() , $obj->getShortdesc() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getM04chapterid() ));
     return true; 
     } 
 
@@ -93,7 +93,7 @@ $obj->setM04chapterid($row['M04CHAPTERID']) ;
 $obj->setChaptername($row['CHAPTERNAME']) ; 
 $obj->setChapternumber($row['CHAPTERNUMBER']) ; 
 $obj->setM11statusid($row['M11STATUSID']) ; 
-$obj->setDesc($row['DESC']) ; 
+$obj->setDescription($row['DESCRIPTION']) ; 
 $obj->setShortdesc($row['SHORTDESC']) ; 
 $obj->setCreatedon($row['CREATEDON']) ; 
 $obj->setCreatedby($row['CREATEDBY']) ; 

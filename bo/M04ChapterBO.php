@@ -5,7 +5,7 @@ class M04ChapterBO {
     private $chaptername;
     private $chapternumber;
     private $m11statusid;
-    private $desc;
+    private $description;
     private $shortdesc;
     private $createdon;
     private $createdby;
@@ -43,13 +43,13 @@ public function setM11statusid($m11statusid)
 { 
     $this->m11statusid = $m11statusid; 
 } 
-public function getDesc() 
+public function getDescription() 
 { 
-    return $this->desc; 
+    return $this->description; 
 } 
-public function setDesc($desc) 
+public function setDescription($description) 
 { 
-    $this->desc = $desc; 
+    $this->description = $description; 
 } 
 public function getShortdesc() 
 { 
