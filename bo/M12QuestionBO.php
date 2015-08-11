@@ -8,6 +8,7 @@ class M12QuestionBO {
     private $modifiedon;
     private $modifiedby;
     private $active;
+    private $m11statusid;
 public function getM12questionid() 
 { 
     return $this->m12questionid; 
@@ -63,6 +64,14 @@ public function getActive()
 public function setActive($active) 
 { 
     $this->active = $active; 
+} 
+public function getM11statusid() 
+{ 
+    return $this->m11statusid; 
+} 
+public function setM11statusid($m11statusid) 
+{ 
+    $this->m11statusid = $m11statusid; 
 } 
 public function iterateVisible() { 
     $json = "{"; 

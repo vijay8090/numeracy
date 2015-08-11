@@ -16,8 +16,8 @@
 						<td><input type='text' name='label' ng-model="fields.title"
 							class='form-control' required>
 							Status : <select ng-model="fields.m11statusid" ng-options="item.m11statusid as item.label for item in statusData">
-    <option value="-1" >Select Status</option>
-</select>
+										<option value="-1" >Select Status</option>
+									</select>
 							</td>
 					</tr>
 

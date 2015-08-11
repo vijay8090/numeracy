@@ -12,11 +12,11 @@ function __construct($DB_con)
     $this->db = $DB_con; 
     } 
 
-private static $insertSQL = "INSERT INTO M05_LESSON (TITLE, LONGDESC, SHORTDESC, ADDITIONALINFO, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+private static $insertSQL = "INSERT INTO M05_LESSON (TITLE, LONGDESC, SHORTDESC, ADDITIONALINFO, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY, M11STATUSID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-private static $selectSQL = "SELECT M05LESSONID, TITLE, LONGDESC, SHORTDESC, ADDITIONALINFO, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY FROM M05_LESSON ORDER BY M05LESSONID DESC "; 
+private static $selectSQL = "SELECT M05LESSONID, TITLE, LONGDESC, SHORTDESC, ADDITIONALINFO, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY, M11STATUSID FROM M05_LESSON ORDER BY M05LESSONID DESC "; 
 
-private static $updateSQL = "UPDATE M05_LESSON SET TITLE = ? , LONGDESC = ? , SHORTDESC = ? , ADDITIONALINFO = ? , CREATEDON = ? , CREATEDBY = ? , MODIFIEDON = ? , MODIFIEDBY = ? WHERE M05LESSONID = ? ";
+private static $updateSQL = "UPDATE M05_LESSON SET TITLE = ? , LONGDESC = ? , SHORTDESC = ? , ADDITIONALINFO = ? , CREATEDON = ? , CREATEDBY = ? , MODIFIEDON = ? , MODIFIEDBY = ? , M11STATUSID = ? WHERE M05LESSONID = ? ";
 
 private static $deleteSQL = "DELETE FROM M05_LESSON WHERE M05LESSONID = ? ";
 
@@ -25,7 +25,7 @@ private static $selectByIdSQL = "SELECT * FROM M05_LESSON WHERE M05LESSONID = ? 
 public function create(M05LessonBO $obj ) 
     { 
     $stmt = $this->db->prepare(self::$insertSQL); 
-    $stmt->execute(array($obj->getTitle() , $obj->getLongdesc() , $obj->getShortdesc() , $obj->getAdditionalinfo() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() )); 
+    $stmt->execute(array($obj->getTitle() , $obj->getLongdesc() , $obj->getShortdesc() , $obj->getAdditionalinfo() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getM11statusid() )); 
     return true;     
 } 
 
@@ -47,6 +47,7 @@ $obj->setCreatedon($row['CREATEDON']) ;
 $obj->setCreatedby($row['CREATEDBY']) ; 
 $obj->setModifiedon($row['MODIFIEDON']) ; 
 $obj->setModifiedby($row['MODIFIEDBY']) ; 
+$obj->setM11statusid($row['M11STATUSID']) ; 
 
 $objArray[] = $obj; 
     } 
@@ -58,7 +59,7 @@ $objArray[] = $obj;
 public function update(M05LessonBO $obj ) 
     { 
     $stmt = $this->db->prepare(self::$updateSQL); 
-    $stmt->execute(array($obj->getTitle() , $obj->getLongdesc() , $obj->getShortdesc() , $obj->getAdditionalinfo() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getM05lessonid() )); 
+    $stmt->execute(array($obj->getTitle() , $obj->getLongdesc() , $obj->getShortdesc() , $obj->getAdditionalinfo() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getM11statusid() , $obj->getM05lessonid() )); 
     return true; 
     } 
 
@@ -97,6 +98,7 @@ $obj->setCreatedon($row['CREATEDON']) ;
 $obj->setCreatedby($row['CREATEDBY']) ; 
 $obj->setModifiedon($row['MODIFIEDON']) ; 
 $obj->setModifiedby($row['MODIFIEDBY']) ; 
+$obj->setM11statusid($row['M11STATUSID']) ; 
     }
     return $obj;
     }

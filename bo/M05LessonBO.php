@@ -10,6 +10,7 @@ class M05LessonBO {
     private $createdby;
     private $modifiedon;
     private $modifiedby;
+    private $m11statusid;
 public function getM05lessonid() 
 { 
     return $this->m05lessonid; 
@@ -81,6 +82,14 @@ public function getModifiedby()
 public function setModifiedby($modifiedby) 
 { 
     $this->modifiedby = $modifiedby; 
+} 
+public function getM11statusid() 
+{ 
+    return $this->m11statusid; 
+} 
+public function setM11statusid($m11statusid) 
+{ 
+    $this->m11statusid = $m11statusid; 
 } 
 public function iterateVisible() { 
     $json = "{"; 

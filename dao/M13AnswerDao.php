@@ -12,11 +12,11 @@ function __construct($DB_con)
     $this->db = $DB_con; 
     } 
 
-private static $insertSQL = "INSERT INTO M13_ANSWER (DESCRIPTION, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY, ACTIVE, TEXTANSWER) VALUES (?, ?, ?, ?, ?, ?, ?)";
+private static $insertSQL = "INSERT INTO M13_ANSWER (DESCRIPTION, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY, ACTIVE, TEXTANSWER, M11STATUSID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-private static $selectSQL = "SELECT M13ANSWERID, DESCRIPTION, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY, ACTIVE, TEXTANSWER FROM M13_ANSWER ORDER BY M13ANSWERID DESC "; 
+private static $selectSQL = "SELECT M13ANSWERID, DESCRIPTION, CREATEDON, CREATEDBY, MODIFIEDON, MODIFIEDBY, ACTIVE, TEXTANSWER, M11STATUSID FROM M13_ANSWER ORDER BY M13ANSWERID DESC "; 
 
-private static $updateSQL = "UPDATE M13_ANSWER SET DESCRIPTION = ? , CREATEDON = ? , CREATEDBY = ? , MODIFIEDON = ? , MODIFIEDBY = ? , ACTIVE = ? , TEXTANSWER = ? WHERE M13ANSWERID = ? ";
+private static $updateSQL = "UPDATE M13_ANSWER SET DESCRIPTION = ? , CREATEDON = ? , CREATEDBY = ? , MODIFIEDON = ? , MODIFIEDBY = ? , ACTIVE = ? , TEXTANSWER = ? , M11STATUSID = ? WHERE M13ANSWERID = ? ";
 
 private static $deleteSQL = "DELETE FROM M13_ANSWER WHERE M13ANSWERID = ? ";
 
@@ -25,7 +25,7 @@ private static $selectByIdSQL = "SELECT * FROM M13_ANSWER WHERE M13ANSWERID = ? 
 public function create(M13AnswerBO $obj ) 
     { 
     $stmt = $this->db->prepare(self::$insertSQL); 
-    $stmt->execute(array($obj->getDescription() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getActive() , $obj->getTextanswer() )); 
+    $stmt->execute(array($obj->getDescription() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getActive() , $obj->getTextanswer() , $obj->getM11statusid() )); 
     return true;     
 } 
 
@@ -46,6 +46,7 @@ $obj->setModifiedon($row['MODIFIEDON']) ;
 $obj->setModifiedby($row['MODIFIEDBY']) ; 
 $obj->setActive($row['ACTIVE']) ; 
 $obj->setTextanswer($row['TEXTANSWER']) ; 
+$obj->setM11statusid($row['M11STATUSID']) ; 
 
 $objArray[] = $obj; 
     } 
@@ -57,7 +58,7 @@ $objArray[] = $obj;
 public function update(M13AnswerBO $obj ) 
     { 
     $stmt = $this->db->prepare(self::$updateSQL); 
-    $stmt->execute(array($obj->getDescription() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getActive() , $obj->getTextanswer() , $obj->getM13answerid() )); 
+    $stmt->execute(array($obj->getDescription() , $obj->getCreatedon() , $obj->getCreatedby() , $obj->getModifiedon() , $obj->getModifiedby() , $obj->getActive() , $obj->getTextanswer() , $obj->getM11statusid() , $obj->getM13answerid() )); 
     return true; 
     } 
 
@@ -95,6 +96,7 @@ $obj->setModifiedon($row['MODIFIEDON']) ;
 $obj->setModifiedby($row['MODIFIEDBY']) ; 
 $obj->setActive($row['ACTIVE']) ; 
 $obj->setTextanswer($row['TEXTANSWER']) ; 
+$obj->setM11statusid($row['M11STATUSID']) ; 
     }
     return $obj;
     }

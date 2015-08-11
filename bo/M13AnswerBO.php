@@ -9,6 +9,7 @@ class M13AnswerBO {
     private $modifiedby;
     private $active;
     private $textanswer;
+    private $m11statusid;
 public function getM13answerid() 
 { 
     return $this->m13answerid; 
@@ -72,6 +73,14 @@ public function getTextanswer()
 public function setTextanswer($textanswer) 
 { 
     $this->textanswer = $textanswer; 
+} 
+public function getM11statusid() 
+{ 
+    return $this->m11statusid; 
+} 
+public function setM11statusid($m11statusid) 
+{ 
+    $this->m11statusid = $m11statusid; 
 } 
 public function iterateVisible() { 
     $json = "{"; 
